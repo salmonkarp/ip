@@ -15,6 +15,7 @@ public class TaskManager {
         ADD_TODO,
         ADD_DEADLINE,
         ADD_EVENT,
+        DELETE,
         BYE,
         UNKNOWN;
 
@@ -35,6 +36,8 @@ public class TaskManager {
                 return TaskCommand.ADD_DEADLINE;
             else if (input.startsWith("event "))
                 return TaskCommand.ADD_EVENT;
+            else if (input.startsWith("delete "))
+                return TaskCommand.DELETE;
             else
                 return TaskCommand.UNKNOWN;
         }
@@ -60,7 +63,7 @@ public class TaskManager {
         try {
             Integer taskIndexToMark = Integer.parseInt(userInput.substring(4).strip()) - 1;
             if (taskIndexToMark < 0 || taskIndexToMark >= tasks.size()) {
-                PrintUtil.printWithLines("Task was not found. Are you sure you inputted the right index?");
+                PrintUtil.printWithLines("Index out of range. Are you sure you inputted the right index?");
             } else {
                 tasks.get(taskIndexToMark).markDone();
                 PrintUtil.printWithLines("Nice! I've marked this task as done:\n" + tasks.get(taskIndexToMark));
@@ -102,7 +105,8 @@ public class TaskManager {
                     String taskNameToAdd = userInput.substring(3).strip();
                     Task taskToAdd = new Task(taskNameToAdd);
                     tasks.add(taskToAdd);
-                    PrintUtil.printWithLines("I've added a new task: " + taskToAdd.toString());
+                    PrintUtil.printWithLines("I've added a new task: " + taskToAdd.toString()
+                            + "\nYou have " + tasks.size() + " tasks now.");
                     break;
                 case LIST:
                     printTasks();
@@ -117,7 +121,8 @@ public class TaskManager {
                     String todoNameToAdd = userInput.substring(4).strip();
                     TodoTask todoTaskToAdd = new TodoTask(todoNameToAdd);
                     tasks.add(todoTaskToAdd);
-                    PrintUtil.printWithLines("I've added a new todo task: " + todoTaskToAdd.toString());
+                    PrintUtil.printWithLines("I've added a new todo task: " + todoTaskToAdd.toString()
+                            + "\nYou have " + tasks.size() + " tasks now.");
                     break;
                 case ADD_DEADLINE:
                     String[] deadlineTaskDetails = userInput.substring(8).split("/");
@@ -129,7 +134,8 @@ public class TaskManager {
                     String deadlineTime = deadlineTaskDetails[1].strip();
                     DeadlineTask deadlineTaskToAdd = new DeadlineTask(deadlineNameToAdd, deadlineTime);
                     tasks.add(deadlineTaskToAdd);
-                    PrintUtil.printWithLines("I've added a new deadline task: " + deadlineTaskToAdd.toString());
+                    PrintUtil.printWithLines("I've added a new deadline task: " + deadlineTaskToAdd.toString()
+                            + "\nYou have " + tasks.size() + " tasks now.");
                     break;
                 case ADD_EVENT:
                     String[] eventTaskDetails = userInput.substring(5).split("/");
@@ -142,7 +148,23 @@ public class TaskManager {
                     String eventEndTime = eventTaskDetails[2].strip();
                     EventTask eventTaskToAdd = new EventTask(eventNameToAdd, eventStartTime, eventEndTime);
                     tasks.add(eventTaskToAdd);
-                    PrintUtil.printWithLines("I've added a new event task: " + eventTaskToAdd.toString());
+                    PrintUtil.printWithLines("I've added a new event task: " + eventTaskToAdd.toString()
+                            + "\nYou have " + tasks.size() + " tasks now.");
+                    break;
+                case DELETE:
+                    try {
+                        int taskIndexToDelete = Integer.parseInt(userInput.substring(6).strip()) - 1;
+                        if (taskIndexToDelete < 0 || taskIndexToDelete >= tasks.size()) {
+                            PrintUtil.printWithLines("Index out of range. Are you sure you inputted the right index?");
+                            break;
+                        }
+                        Task deletedTask = tasks.remove(taskIndexToDelete);
+                        PrintUtil.printWithLines("I've removed this task: " + deletedTask.toString()
+                                + "\nYou have " + tasks.size() + " tasks now.");
+                    } catch (NumberFormatException e) {
+                        PrintUtil.printWithLines("Format error! Did you put a single number after 'delete'?");
+                    }
+
                     break;
                 case BYE:
                     PrintUtil.printWithLines("Bye. Hope to see you again soon!");

@@ -26,4 +26,8 @@ event weird5 / . / . / .
 event weird6 afjiewofjaiowefjw / ajfoiewjfoaj / afjoeiwjfioaw / jfaoidjaf
 mark 8
 list
+delete 8
+delete 1
+delete 3
+list
 bye
