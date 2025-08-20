@@ -15,7 +15,7 @@ public class TaskManager {
         BYE,
         UNKNOWN;
 
-        public static TaskCommand handleUserInput(String input) {
+        public static TaskCommand parseStringInput(String input) {
             if (input.startsWith("add "))
                 return TaskCommand.ADD;
             else if (input.equals("list"))
@@ -31,11 +31,10 @@ public class TaskManager {
         }
     }
 
-    public static void printInitialMessage() {
+    public static void printGreetingMessage() {
         String greetingMessage = """
                 Hello! I'm TaskManager.
-                What can I do for you?
-                               """;
+                What can I do for you?""";
         ;
         PrintUtil.printWithLines(greetingMessage);
     }
@@ -49,7 +48,7 @@ public class TaskManager {
     }
 
     public static void main(String[] args) {
-        printInitialMessage();
+        printGreetingMessage();
 
         String userInput = "";
         TaskCommand userTaskCommand;
@@ -57,7 +56,7 @@ public class TaskManager {
         while (true) {
             System.out.print("Insert your input here: ");
             userInput = textScanner.nextLine();
-            userTaskCommand = TaskCommand.handleUserInput(userInput);
+            userTaskCommand = TaskCommand.parseStringInput(userInput);
             switch (userTaskCommand) {
                 case ADD:
                     String taskNameToAdd = userInput.substring(3).strip();
