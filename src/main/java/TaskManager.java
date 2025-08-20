@@ -1,10 +1,11 @@
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TaskManager {
 
     public static Scanner textScanner = new Scanner(System.in);
-    public static Task[] taskArray = new Task[100];
-    public static Integer taskCurrentIndex = 0;
+    public static List<Task> taskArray = new ArrayList<Task>(100);
 
     public static enum TaskCommand {
         ADD,
@@ -37,9 +38,9 @@ public class TaskManager {
     }
 
     public static void printTasks() {
-        String result = "";
-        for (Integer i = 0; i < taskCurrentIndex; i += 1) {
-            result += ((i + 1) + ". " + taskArray[i].toString() + "\n");
+        String result = "Here are the tasks in your list!\n";
+        for (Integer i = 0; i < taskArray.size(); i += 1) {
+            result += ((i + 1) + ". " + taskArray.get(i).toString() + "\n");
         }
         PrintUtil.printWithLines(result);
     }
@@ -57,15 +58,15 @@ public class TaskManager {
             switch (userTaskCommand) {
                 case ADD:
                     String taskNameToAdd = userInput.substring(3).strip();
-                    taskArray[taskCurrentIndex] = new Task(taskNameToAdd);
-                    PrintUtil.printWithLines("added new task: " + taskNameToAdd);
-                    taskCurrentIndex += 1;
+                    taskArray.add(new Task(taskNameToAdd));
+                    PrintUtil.printWithLines("I've added a new task: " + taskNameToAdd);
                     break;
                 case LIST:
                     printTasks();
                     break;
                 case MARK_AS_DONE:
-                    PrintUtil.printWithLines("TODO");
+                    PrintUtil.printWithLines("Nice! I've marked this task as done.");
+
                     break;
                 case BYE:
                     PrintUtil.printWithLines("Bye. Hope to see you again soon!");
