@@ -7,11 +7,6 @@ public class Task {
         this.isDone = false;
     }
 
-    public Task(String name, boolean isDone) {
-        this.name = name;
-        this.isDone = true;
-    }
-
     public String getName() {
         return this.name;
     };

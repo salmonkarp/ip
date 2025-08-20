@@ -5,13 +5,16 @@ import java.util.Scanner;
 public class TaskManager {
 
     public static Scanner textScanner = new Scanner(System.in);
-    public static List<Task> taskArray = new ArrayList<Task>(100);
+    public static List<Task> tasks = new ArrayList<Task>(100);
 
     public static enum TaskCommand {
         ADD,
         LIST,
         MARK_AS_DONE,
         UNMARK_AS_DONE,
+        ADD_TODO,
+        ADD_DEADLINE,
+        ADD_EVENT,
         BYE,
         UNKNOWN;
 
@@ -26,6 +29,12 @@ public class TaskManager {
                 return TaskCommand.UNMARK_AS_DONE;
             else if (input.equals("bye"))
                 return TaskCommand.BYE;
+            else if (input.startsWith("todo "))
+                return TaskCommand.ADD_TODO;
+            else if (input.startsWith("deadline "))
+                return TaskCommand.ADD_DEADLINE;
+            else if (input.startsWith("event "))
+                return TaskCommand.ADD_EVENT;
             else
                 return TaskCommand.UNKNOWN;
         }
@@ -40,11 +49,41 @@ public class TaskManager {
     }
 
     public static void printTasks() {
-        String result = "Here are the tasks in your list!\n";
-        for (Integer i = 0; i < taskArray.size(); i += 1) {
-            result += ((i + 1) + ". " + taskArray.get(i).toString() + "\n");
+        String resultMessage = "Here are the tasks in your list!\n";
+        for (Integer i = 0; i < tasks.size(); i += 1) {
+            resultMessage += ((i + 1) + ". " + tasks.get(i).toString() + "\n");
         }
-        PrintUtil.printWithLines(result);
+        PrintUtil.printWithLines(resultMessage);
+    }
+
+    public static void markAsDoneFromInputString(String userInput) {
+        try {
+            Integer taskIndexToMark = Integer.parseInt(userInput.substring(4).strip()) - 1;
+            if (taskIndexToMark < 0 || taskIndexToMark >= tasks.size()) {
+                PrintUtil.printWithLines("Task was not found. Are you sure you inputted the right index?");
+            } else {
+                tasks.get(taskIndexToMark).markDone();
+                PrintUtil.printWithLines("Nice! I've marked this task as done:\n" + tasks.get(taskIndexToMark));
+            }
+        } catch (NumberFormatException e) {
+            PrintUtil.printWithLines("Format error! Did you put a single number after 'mark'?");
+        }
+
+    }
+
+    public static void markAsUndoneFromInputString(String userInput) {
+        try {
+            Integer taskIndexToMark = Integer.parseInt(userInput.substring(6).strip()) - 1;
+            if (taskIndexToMark < 0 || taskIndexToMark >= tasks.size()) {
+                PrintUtil.printWithLines("Task was not found. Are you sure you inputted the right index?");
+            } else {
+                tasks.get(taskIndexToMark).markUndone();
+                PrintUtil.printWithLines("Nice! I've unmarked this task as done:\n" + tasks.get(taskIndexToMark));
+            }
+        } catch (NumberFormatException e) {
+            PrintUtil.printWithLines("Format error! Did you put a number after 'unmark'?");
+        }
+
     }
 
     public static void main(String[] args) {
@@ -60,43 +99,49 @@ public class TaskManager {
             switch (userTaskCommand) {
                 case ADD:
                     String taskNameToAdd = userInput.substring(3).strip();
-                    taskArray.add(new Task(taskNameToAdd));
-                    PrintUtil.printWithLines("I've added a new task: " + taskNameToAdd);
+                    Task taskToAdd = new Task(taskNameToAdd);
+                    tasks.add(taskToAdd);
+                    PrintUtil.printWithLines("I've added a new task: " + taskToAdd.toString());
                     break;
                 case LIST:
                     printTasks();
                     break;
                 case MARK_AS_DONE:
-                    String taskNameToMark = userInput.substring(5).strip();
-                    Task foundTaskToMark = null;
-                    for (Task task : taskArray) {
-                        if (task.getName().equals(taskNameToMark)) {
-                            foundTaskToMark = task;
-                            task.markDone();
-                            break;
-                        }
-                    }
-                    if (foundTaskToMark != null)
-                        PrintUtil.printWithLines("Nice! I've marked this task as done:\n" + foundTaskToMark);
-                    else
-                        PrintUtil.printWithLines("Task was not found. Are you sure you inputted the right name?");
-
+                    markAsDoneFromInputString(userInput);
                     break;
                 case UNMARK_AS_DONE:
-                    String taskNameToUnmark = userInput.substring(7).strip();
-                    Task foundTasktoUnmark = null;
-                    for (Task task : taskArray) {
-                        if (task.getName().equals(taskNameToUnmark)) {
-                            foundTasktoUnmark = task;
-                            task.markUndone();
-                            break;
-                        }
+                    markAsUndoneFromInputString(userInput);
+                    break;
+                case ADD_TODO:
+                    String todoNameToAdd = userInput.substring(4).strip();
+                    TodoTask todoTaskToAdd = new TodoTask(todoNameToAdd);
+                    tasks.add(todoTaskToAdd);
+                    PrintUtil.printWithLines("I've added a new todo task: " + todoTaskToAdd.toString());
+                    break;
+                case ADD_DEADLINE:
+                    String[] deadlineTaskDetails = userInput.substring(8).split("/");
+                    if (deadlineTaskDetails.length != 2) {
+                        PrintUtil.printWithLines("Wrong format! Type 'deadline [name] / [deadline]'");
+                        break;
                     }
-                    if (foundTasktoUnmark != null)
-                        PrintUtil.printWithLines("Nice! I've unmarked this task as done:\n" + foundTasktoUnmark);
-                    else
-                        PrintUtil.printWithLines("Task was not found. Are you sure you inputted the right name?");
-
+                    String deadlineNameToAdd = deadlineTaskDetails[0].strip();
+                    String deadlineTime = deadlineTaskDetails[1].strip();
+                    DeadlineTask deadlineTaskToAdd = new DeadlineTask(deadlineNameToAdd, deadlineTime);
+                    tasks.add(deadlineTaskToAdd);
+                    PrintUtil.printWithLines("I've added a new deadline task: " + deadlineTaskToAdd.toString());
+                    break;
+                case ADD_EVENT:
+                    String[] eventTaskDetails = userInput.substring(5).split("/");
+                    if (eventTaskDetails.length != 3) {
+                        PrintUtil.printWithLines("Wrong format! Type 'event [name] / [startTime] / [endTime]'");
+                        break;
+                    }
+                    String eventNameToAdd = eventTaskDetails[0].strip();
+                    String eventStartTime = eventTaskDetails[1].strip();
+                    String eventEndTime = eventTaskDetails[2].strip();
+                    EventTask eventTaskToAdd = new EventTask(eventNameToAdd, eventStartTime, eventEndTime);
+                    tasks.add(eventTaskToAdd);
+                    PrintUtil.printWithLines("I've added a new event task: " + eventTaskToAdd.toString());
                     break;
                 case BYE:
                     PrintUtil.printWithLines("Bye. Hope to see you again soon!");
