@@ -11,6 +11,7 @@ public class TaskManager {
         ADD,
         LIST,
         MARK_AS_DONE,
+        UNMARK_AS_DONE,
         BYE,
         UNKNOWN;
 
@@ -19,8 +20,10 @@ public class TaskManager {
                 return TaskCommand.ADD;
             else if (input.equals("list"))
                 return TaskCommand.LIST;
-            else if (input.startsWith("mark"))
+            else if (input.startsWith("mark "))
                 return TaskCommand.MARK_AS_DONE;
+            else if (input.startsWith("unmark "))
+                return TaskCommand.UNMARK_AS_DONE;
             else if (input.equals("bye"))
                 return TaskCommand.BYE;
             else
@@ -65,7 +68,35 @@ public class TaskManager {
                     printTasks();
                     break;
                 case MARK_AS_DONE:
-                    PrintUtil.printWithLines("Nice! I've marked this task as done.");
+                    String taskNameToMark = userInput.substring(5).strip();
+                    Task foundTaskToMark = null;
+                    for (Task task : taskArray) {
+                        if (task.getName().equals(taskNameToMark)) {
+                            foundTaskToMark = task;
+                            task.markDone();
+                            break;
+                        }
+                    }
+                    if (foundTaskToMark != null)
+                        PrintUtil.printWithLines("Nice! I've marked this task as done:\n" + foundTaskToMark);
+                    else
+                        PrintUtil.printWithLines("Task was not found. Are you sure you inputted the right name?");
+
+                    break;
+                case UNMARK_AS_DONE:
+                    String taskNameToUnmark = userInput.substring(7).strip();
+                    Task foundTasktoUnmark = null;
+                    for (Task task : taskArray) {
+                        if (task.getName().equals(taskNameToUnmark)) {
+                            foundTasktoUnmark = task;
+                            task.markUndone();
+                            break;
+                        }
+                    }
+                    if (foundTasktoUnmark != null)
+                        PrintUtil.printWithLines("Nice! I've unmarked this task as done:\n" + foundTasktoUnmark);
+                    else
+                        PrintUtil.printWithLines("Task was not found. Are you sure you inputted the right name?");
 
                     break;
                 case BYE:
