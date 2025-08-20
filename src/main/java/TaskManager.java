@@ -93,8 +93,9 @@ public class TaskManager {
         TaskCommand userTaskCommand;
 
         while (true) {
-            System.out.print("Insert your input here: ");
+            System.out.print("\nInsert your input here: ");
             userInput = textScanner.nextLine();
+            System.out.print("\n");
             userTaskCommand = TaskCommand.parseStringInput(userInput);
             switch (userTaskCommand) {
                 case ADD:

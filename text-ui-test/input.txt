@@ -1,0 +1,29 @@
+add task1
+add task2
+add task3
+mark 2
+mark 3
+unmark 1
+unmark 2
+list
+todo task4 randomfodder
+todo task5
+list
+mark 5
+list
+deadline task6 / saturday
+deadline weird1
+deadline weird2 / saturday / sunday
+deadline weird3 / / / 
+mark 6
+list
+unmark 6
+list
+event task7 / now / later
+event task8 / sat / sun
+event weird4 / .
+event weird5 / . / . / .
+event weird6 afjiewofjaiowefjw / ajfoiewjfoaj / afjoeiwjfioaw / jfaoidjaf
+mark 8
+list
+bye
