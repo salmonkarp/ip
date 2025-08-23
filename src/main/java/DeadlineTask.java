@@ -7,8 +7,23 @@ public class DeadlineTask extends Task {
         this.deadline = deadline;
     }
 
+    public DeadlineTask(String name, boolean isDone, String deadline) {
+        super(name, isDone);
+        this.deadline = deadline;
+    }
+
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + deadline + ")";
+        return "[" + getSaveCode() + "]" + super.toString() + " (by: " + deadline + ")";
+    }
+
+    @Override
+    public String getSaveCode() {
+        return "D";
+    }
+
+    @Override
+    public String getSaveString() {
+        return super.getSaveString() + '\0' + this.deadline;
     }
 }
