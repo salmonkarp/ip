@@ -1,11 +1,15 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class TaskManager {
 
     public static Scanner textScanner = new Scanner(System.in);
     public static List<Task> tasks = new ArrayList<Task>(100);
+    public static final String LOCAL_DATA_PATH = "./data/tasks.txt";
 
     public static enum TaskCommand {
         ADD,
@@ -59,6 +63,74 @@ public class TaskManager {
         PrintUtil.printWithLines(resultMessage);
     }
 
+    public static String getTasksAsString() {
+        String result = "";
+        for (Task t : tasks) {
+            result += t.getSaveString() + '\n';
+        }
+        return result;
+    }
+
+    public static void saveTasksToLocal() {
+        String stringifiedTasks = getTasksAsString();
+
+        // debug statements, TODO: Comment later
+        // System.out.println("Now saving to " + LOCAL_DATA_PATH);
+        // System.out.println(stringifiedTasks);
+
+        try {
+            FileWriter fileWriter = new FileWriter(LOCAL_DATA_PATH);
+            fileWriter.write(stringifiedTasks);
+            fileWriter.close();
+            System.out.println("Successfully wrote to " + LOCAL_DATA_PATH);
+        } catch (IOException e) {
+            System.out.println("Failed to write to " + LOCAL_DATA_PATH);
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void initializeTasks() {
+        try {
+            File saveFile = new File(LOCAL_DATA_PATH);
+            Scanner scanner = new Scanner(saveFile);
+            while (scanner.hasNextLine()) {
+                String rawString = scanner.nextLine();
+                Task task = getTaskFromSaveString(rawString);
+                // System.out.println(task);
+                if (task == null) {
+                    continue;
+                }
+                tasks.add(task);
+            }
+            scanner.close();
+            printTasks();
+        } catch (Exception e) {
+            System.out.println("Failed to obtain data in " + LOCAL_DATA_PATH);
+            e.printStackTrace();
+        }
+        // System.out.println(tasks);
+    }
+
+    public static Task getTaskFromSaveString(String s) {
+        String[] delimitedStrings = s.split("\0");
+        String taskCode = delimitedStrings[0];
+        // System.out.println("line is " + s);
+        if (taskCode.equals("A")) {
+            return new Task(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
+        } else if (taskCode.equals("T")) {
+            return new TodoTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
+        } else if (taskCode.equals("D")) {
+            return new DeadlineTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]),
+                    delimitedStrings[2]);
+        } else if (taskCode.equals("E")) {
+            return new EventTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]), delimitedStrings[1],
+                    delimitedStrings[2]);
+        } else {
+            return null;
+        }
+    }
+
     public static void markAsDoneFromInputString(String userInput) {
         try {
             Integer taskIndexToMark = Integer.parseInt(userInput.substring(4).strip()) - 1;
@@ -91,7 +163,7 @@ public class TaskManager {
 
     public static void main(String[] args) {
         printGreetingMessage();
-
+        initializeTasks();
         String userInput = "";
         TaskCommand userTaskCommand;
 
@@ -168,6 +240,7 @@ public class TaskManager {
                     break;
                 case BYE:
                     PrintUtil.printWithLines("Bye. Hope to see you again soon!");
+                    saveTasksToLocal();
                     return;
                 case UNKNOWN:
                     PrintUtil.printWithLines("Unknown command. Try again.");
