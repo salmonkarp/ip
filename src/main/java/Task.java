@@ -7,11 +7,6 @@ public class Task {
         this.isDone = false;
     }
 
-    public Task(String name, boolean isDone) {
-        this.name = name;
-        this.isDone = isDone;
-    }
-
     public String getName() {
         return this.name;
     };
@@ -31,14 +26,6 @@ public class Task {
     @Override
     public String toString() {
         return (this.isDone ? "[X] " : "[ ] ") + this.name;
-    }
-
-    public String getSaveCode() {
-        return "A";
-    }
-
-    public String getSaveString() {
-        return getSaveCode() + '\0' + this.name + '\0' + this.isDone;
     }
 
 }
