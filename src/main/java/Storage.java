@@ -7,7 +7,7 @@ public class Storage {
 
     private TaskList loadedTasks = new TaskList(100);;
 
-    public Storage(String filePath) {
+    public Storage(String filePath, Ui ui) {
         loadedTasks = new TaskList(100);
         try {
             File saveFile = new File(filePath);
@@ -21,7 +21,7 @@ public class Storage {
                 loadedTasks.add(task);
             }
             scanner.close();
-            // Ui.printTasks(loadedTasks);
+            ui.printTasks(loadedTasks);
         } catch (Exception e) {
             System.out.println("Failed to obtain data in " + filePath);
             e.printStackTrace();
@@ -32,15 +32,15 @@ public class Storage {
         return loadedTasks;
     }
 
-    public void save(TaskList tasks, String filePath) {
+    public void save(TaskList tasks, String filePath, Ui ui) {
         String stringifiedTasks = tasks.getTasksAsString();
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(stringifiedTasks);
             fileWriter.close();
-            Ui.printLine("Successfully wrote to " + filePath);
+            ui.printLine("Successfully wrote to " + filePath);
         } catch (IOException e) {
-            Ui.printLine("Failed to write to " + filePath);
+            ui.printLine("Failed to write to " + filePath);
             e.printStackTrace();
         }
 
