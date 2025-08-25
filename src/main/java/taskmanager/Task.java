@@ -1,15 +1,32 @@
 package taskmanager;
 
+/**
+ * General task class that can be further
+ * expanded upon by its subclasses.
+ */
 public class Task {
     private String name;
     private boolean isDone;
 
+    /**
+     * Constructor only using the task name/description.
+     * Default behaviour is to set isDone to false as tasks
+     * should generally not be done at point of creation.
+     * @param name Name or description of task.
+     */
     public Task(String name) {
         this.name = name;
         this.isDone = false;
     }
 
-    public Task(String name, boolean isDone) {
+    /**
+     * Constructor specifying the task name and whether
+     * it has been done or not. Mostly used for loading
+     * from a file.
+     * @param name Name or description of task.
+     * @param isDone Whether the task has been completed or not.
+     */
+    protected Task(String name, boolean isDone) {
         this.name = name;
         this.isDone = isDone;
     }

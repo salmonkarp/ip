@@ -5,10 +5,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * General utility class to help read and write
+ * from files stored in user's device.
+ */
 public class Storage {
 
     private TaskList loadedTasks = new TaskList();
 
+    /**
+     * Helper class to allow for future instantiation.
+     * Initialisation will read from filePath, but we
+     * need to call load() to actually update the programme's
+     * actual task list.
+     * @param filePath Path of where data is stored in user's device.
+     * @param ui Helper object to help print text.
+     */
     public Storage(String filePath, Ui ui) {
         loadedTasks = new TaskList();
         try {
@@ -42,6 +54,12 @@ public class Storage {
         return loadedTasks;
     }
 
+    /**
+     * Saves tasks onto a local file in the user's device.
+     * @param tasks List of tasks obtain from main TaskManager process.
+     * @param filePath Path of where data should be stored.
+     * @param ui Helper object to help print text.
+     */
     public void save(TaskList tasks, String filePath, Ui ui) {
         String stringifiedTasks = tasks.getTasksAsString();
         try {
@@ -51,7 +69,6 @@ public class Storage {
             ui.printLine("Successfully wrote to " + filePath);
         } catch (IOException e) {
             ui.printLine("Failed to write to " + filePath);
-            e.printStackTrace();
         }
 
     }

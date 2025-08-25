@@ -1,5 +1,8 @@
 package taskmanager;
 
+/**
+ * A type of task not too different from the normal Task class.
+ */
 public class TodoTask extends Task {
     public TodoTask(String name) {
         super(name);

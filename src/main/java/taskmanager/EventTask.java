@@ -3,16 +3,33 @@ package taskmanager;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A type of task that has both a starting and ending time.
+ */
 public class EventTask extends Task {
     private LocalDate startTime;
     private LocalDate endTime;
 
+    /**
+     * Constructor to create an EventTask
+     * @param name Name/description of task.
+     * @param startTime When the event starts, in the form of a LocalDate object.
+     * @param endTime When the event ends, in the form of a LocalDate object.
+     */
     public EventTask(String name, LocalDate startTime, LocalDate endTime) {
         super(name);
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
+    /**
+     * Constructor to create an EventTask, specifying whether the task
+     * has been done or not.
+     * @param name Name/description of task.
+     * @param isDone Whether the task has been done or not.
+     * @param startTime When the event starts, in the form of a LocalDate object.
+     * @param endTime When the event ends, in the form of a LocalDate object.
+     */
     public EventTask(String name, boolean isDone, LocalDate startTime, LocalDate endTime) {
         super(name, isDone);
         this.startTime = startTime;
