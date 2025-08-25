@@ -17,31 +17,32 @@ public class Parser {
         UNKNOWN;
 
         public static TaskCommand getTaskCommandFromInput(String input) {
-            if (input.startsWith("add "))
+            if (input.startsWith("add ")) {
                 return TaskCommand.ADD;
-            else if (input.equals("list"))
+            } else if (input.equals("list")) {
                 return TaskCommand.LIST;
-            else if (input.startsWith("mark "))
+            } else if (input.startsWith("mark ")) {
                 return TaskCommand.MARK_AS_DONE;
-            else if (input.startsWith("unmark "))
+            } else if (input.startsWith("unmark ")) {
                 return TaskCommand.UNMARK_AS_DONE;
-            else if (input.equals("bye"))
+            } else if (input.equals("bye")) {
                 return TaskCommand.BYE;
-            else if (input.startsWith("todo "))
+            } else if (input.startsWith("todo ")) {
                 return TaskCommand.ADD_TODO;
-            else if (input.startsWith("deadline "))
+            } else if (input.startsWith("deadline ")) {
                 return TaskCommand.ADD_DEADLINE;
-            else if (input.startsWith("event "))
+            } else if (input.startsWith("event ")) {
                 return TaskCommand.ADD_EVENT;
-            else if (input.startsWith("delete "))
+            } else if (input.startsWith("delete ")) {
                 return TaskCommand.DELETE;
-            else
+            } else {
                 return TaskCommand.UNKNOWN;
+            }
         }
 
     }
 
-    public static String SAVE_DELIMITER = "`";
+    protected static final String SAVE_DELIMITER = "`";
 
     public static Task getTaskFromSaveString(String s) {
         String[] delimitedStrings = s.split(SAVE_DELIMITER);

@@ -27,37 +27,37 @@ public class TaskManager {
 
             userTaskCommand = Parser.TaskCommand.getTaskCommandFromInput(userInput);
             switch (userTaskCommand) {
-                case ADD:
-                    Parser.handleAddNormalTask(userInput, tasks, ui);
-                    break;
-                case LIST:
-                    ui.printTasks(tasks);
-                    break;
-                case MARK_AS_DONE:
-                    Parser.handleMarkAsDone(userInput, tasks, ui);
-                    break;
-                case UNMARK_AS_DONE:
-                    Parser.handleMarkAsUndone(userInput, tasks, ui);
-                    break;
-                case ADD_TODO:
-                    Parser.handleAddTodoTask(userInput, tasks, ui);
-                    break;
-                case ADD_DEADLINE:
-                    Parser.handleAddDeadlineTask(userInput, tasks, ui);
-                    break;
-                case ADD_EVENT:
-                    Parser.handleAddEventTask(userInput, tasks, ui);
-                    break;
-                case DELETE:
-                    Parser.handleDeleteTask(userInput, tasks, ui);
-                    break;
-                case BYE:
-                    ui.printWithLines("Bye. Hope to see you again soon!");
-                    storage.save(tasks, LOCAL_DATA_PATH, ui);
-                    return;
-                case UNKNOWN:
-                    ui.printWithLines("Unknown command. Try again.");
-                    break;
+            case ADD:
+                Parser.handleAddNormalTask(userInput, tasks, ui);
+                break;
+            case LIST:
+                ui.printTasks(tasks);
+                break;
+            case MARK_AS_DONE:
+                Parser.handleMarkAsDone(userInput, tasks, ui);
+                break;
+            case UNMARK_AS_DONE:
+                Parser.handleMarkAsUndone(userInput, tasks, ui);
+                break;
+            case ADD_TODO:
+                Parser.handleAddTodoTask(userInput, tasks, ui);
+                break;
+            case ADD_DEADLINE:
+                Parser.handleAddDeadlineTask(userInput, tasks, ui);
+                break;
+            case ADD_EVENT:
+                Parser.handleAddEventTask(userInput, tasks, ui);
+                break;
+            case DELETE:
+                Parser.handleDeleteTask(userInput, tasks, ui);
+                break;
+            case BYE:
+                ui.printWithLines("Bye. Hope to see you again soon!");
+                storage.save(tasks, LOCAL_DATA_PATH, ui);
+                return;
+            default:
+                ui.printWithLines("Unknown command. Try again.");
+                break;
             }
 
         }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TaskList {
 
-    protected static int INITIAL_TASK_LIST_CAPACITY = 100;
+    protected static final int INITIAL_TASK_LIST_CAPACITY = 100;
 
     private final List<Task> tasks;
 
