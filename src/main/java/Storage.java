@@ -5,10 +5,10 @@ import java.util.Scanner;
 
 public class Storage {
 
-    private TaskList loadedTasks = new TaskList(100);;
+    private TaskList loadedTasks = new TaskList();
 
     public Storage(String filePath, Ui ui) {
-        loadedTasks = new TaskList(100);
+        loadedTasks = new TaskList();
         try {
             File saveFile = new File(filePath);
             Scanner scanner = new Scanner(saveFile);

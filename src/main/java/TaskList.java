@@ -3,10 +3,16 @@ import java.util.List;
 
 public class TaskList {
 
+    private static int INITIAL_TASK_LIST_CAPACITY = 100;
+
     private List<Task> tasks;
 
-    public TaskList(int intialCapacity) {
-        tasks = new ArrayList<Task>(intialCapacity);
+    public TaskList() {
+        tasks = new ArrayList<Task>(INITIAL_TASK_LIST_CAPACITY);
+    }
+
+    public TaskList(int initialCapacity) {
+        tasks = new ArrayList<Task>(initialCapacity);
     }
 
     public String getTasksAsString() {

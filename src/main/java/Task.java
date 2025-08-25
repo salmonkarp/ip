@@ -38,7 +38,11 @@ public class Task {
     }
 
     public String getSaveString() {
-        return getSaveCode() + '>' + this.name + '>' + this.isDone;
+        return getSaveCode()
+                + Parser.SAVE_DELIMITER
+                + this.name
+                + Parser.SAVE_DELIMITER
+                + this.isDone;
     }
 
 }

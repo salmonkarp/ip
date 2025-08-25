@@ -34,9 +34,9 @@ public class EventTask extends Task {
     @Override
     public String getSaveString() {
         return super.getSaveString()
-                + '>'
+                + Parser.SAVE_DELIMITER
                 + this.startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                + '>'
+                + Parser.SAVE_DELIMITER
                 + this.endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }
