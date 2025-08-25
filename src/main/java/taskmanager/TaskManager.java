@@ -64,7 +64,7 @@ public class TaskManager {
                 ui.printWithLines("Bye. Hope to see you again soon!");
                 storage.save(tasks, LOCAL_DATA_PATH, ui);
                 return;
-            case UNKNOWN:
+            default:
                 ui.printWithLines("Unknown command. Try again.");
                 break;
             }

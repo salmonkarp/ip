@@ -51,7 +51,7 @@ public class Parser {
 
     }
 
-    public static String SAVE_DELIMITER = "`";
+    protected static final String SAVE_DELIMITER = "`";
 
     public static Task getTaskFromSaveString(String s) {
         String[] delimitedStrings = s.split(SAVE_DELIMITER);
