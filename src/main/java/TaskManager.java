@@ -1,9 +1,14 @@
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+// import java.time.LocalDate;
+// import java.time.format.DateTimeFormatter;
+// import java.time.temporal.ChronoUnit;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class TaskManager {
 
@@ -73,7 +78,6 @@ public class TaskManager {
 
     public static void saveTasksToLocal() {
         String stringifiedTasks = getTasksAsString();
-
         try {
             FileWriter fileWriter = new FileWriter(LOCAL_DATA_PATH);
             fileWriter.write(stringifiedTasks);
@@ -117,11 +121,46 @@ public class TaskManager {
             return new DeadlineTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]),
                     delimitedStrings[2]);
         } else if (taskCode.equals("E")) {
-            return new EventTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]), delimitedStrings[1],
-                    delimitedStrings[2]);
+            return new EventTask(delimitedStrings[1],
+                    Boolean.parseBoolean(delimitedStrings[2]), delimitedStrings[1], delimitedStrings[2]);
         } else {
             return null;
         }
+    }
+
+    public static void addNormalTask(String userInput) {
+        String taskNameToAdd = userInput.substring(3).strip();
+        Task taskToAdd = new Task(taskNameToAdd);
+        tasks.add(taskToAdd);
+        PrintUtil.printWithLines("I've added a new task: " + taskToAdd.toString()
+                + "\nYou have " + tasks.size() + " tasks now.");
+    }
+
+    public static void addTodoTask(String userInput) {
+        String todoNameToAdd = userInput.substring(4).strip();
+        TodoTask todoTaskToAdd = new TodoTask(todoNameToAdd);
+        tasks.add(todoTaskToAdd);
+        PrintUtil.printWithLines("I've added a new todo task: " + todoTaskToAdd.toString()
+                + "\nYou have " + tasks.size() + " tasks now.");
+    }
+
+    public static void addDeadlineTask(String[] deadlineTaskDetails) {
+        String deadlineNameToAdd = deadlineTaskDetails[0].strip();
+        String deadlineTime = deadlineTaskDetails[1].strip();
+        DeadlineTask deadlineTaskToAdd = new DeadlineTask(deadlineNameToAdd, deadlineTime);
+        tasks.add(deadlineTaskToAdd);
+        PrintUtil.printWithLines("I've added a new deadline task: " + deadlineTaskToAdd.toString()
+                + "\nYou have " + tasks.size() + " tasks now.");
+    }
+
+    public static void addEventTask(String[] eventTaskDetails) {
+        String eventNameToAdd = eventTaskDetails[0].strip();
+        String eventStartTime = eventTaskDetails[1].strip();
+        String eventEndTime = eventTaskDetails[2].strip();
+        EventTask eventTaskToAdd = new EventTask(eventNameToAdd, eventStartTime, eventEndTime);
+        tasks.add(eventTaskToAdd);
+        PrintUtil.printWithLines("I've added a new event task: " + eventTaskToAdd.toString()
+                + "\nYou have " + tasks.size() + " tasks now.");
     }
 
     public static void markAsDoneFromInputString(String userInput) {
@@ -167,11 +206,7 @@ public class TaskManager {
             userTaskCommand = TaskCommand.parseStringInput(userInput);
             switch (userTaskCommand) {
                 case ADD:
-                    String taskNameToAdd = userInput.substring(3).strip();
-                    Task taskToAdd = new Task(taskNameToAdd);
-                    tasks.add(taskToAdd);
-                    PrintUtil.printWithLines("I've added a new task: " + taskToAdd.toString()
-                            + "\nYou have " + tasks.size() + " tasks now.");
+                    addNormalTask(userInput);
                     break;
                 case LIST:
                     printTasks();
@@ -183,11 +218,7 @@ public class TaskManager {
                     markAsUndoneFromInputString(userInput);
                     break;
                 case ADD_TODO:
-                    String todoNameToAdd = userInput.substring(4).strip();
-                    TodoTask todoTaskToAdd = new TodoTask(todoNameToAdd);
-                    tasks.add(todoTaskToAdd);
-                    PrintUtil.printWithLines("I've added a new todo task: " + todoTaskToAdd.toString()
-                            + "\nYou have " + tasks.size() + " tasks now.");
+                    addTodoTask(userInput);
                     break;
                 case ADD_DEADLINE:
                     String[] deadlineTaskDetails = userInput.substring(8).split("/");
@@ -195,12 +226,7 @@ public class TaskManager {
                         PrintUtil.printWithLines("Wrong format! Type 'deadline [name] / [deadline]'");
                         break;
                     }
-                    String deadlineNameToAdd = deadlineTaskDetails[0].strip();
-                    String deadlineTime = deadlineTaskDetails[1].strip();
-                    DeadlineTask deadlineTaskToAdd = new DeadlineTask(deadlineNameToAdd, deadlineTime);
-                    tasks.add(deadlineTaskToAdd);
-                    PrintUtil.printWithLines("I've added a new deadline task: " + deadlineTaskToAdd.toString()
-                            + "\nYou have " + tasks.size() + " tasks now.");
+                    addDeadlineTask(deadlineTaskDetails);
                     break;
                 case ADD_EVENT:
                     String[] eventTaskDetails = userInput.substring(5).split("/");
@@ -208,13 +234,7 @@ public class TaskManager {
                         PrintUtil.printWithLines("Wrong format! Type 'event [name] / [startTime] / [endTime]'");
                         break;
                     }
-                    String eventNameToAdd = eventTaskDetails[0].strip();
-                    String eventStartTime = eventTaskDetails[1].strip();
-                    String eventEndTime = eventTaskDetails[2].strip();
-                    EventTask eventTaskToAdd = new EventTask(eventNameToAdd, eventStartTime, eventEndTime);
-                    tasks.add(eventTaskToAdd);
-                    PrintUtil.printWithLines("I've added a new event task: " + eventTaskToAdd.toString()
-                            + "\nYou have " + tasks.size() + " tasks now.");
+                    addEventTask(eventTaskDetails);
                     break;
                 case DELETE:
                     try {
