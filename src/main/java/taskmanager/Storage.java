@@ -27,7 +27,7 @@ public class Storage {
             File saveFile = new File(filePath);
             File parentDir = saveFile.getParentFile();
             if (parentDir != null && !parentDir.exists()) {
-                boolean isSuccessful = parentDir.mkdirs();  // create ./data/ if missing
+                boolean isSuccessful = parentDir.mkdirs();
             }
             if (!saveFile.exists()) {
                 boolean isSuccessful = saveFile.createNewFile();
