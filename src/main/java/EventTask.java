@@ -1,14 +1,17 @@
-public class EventTask extends Task {
-    private String startTime;
-    private String endTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-    public EventTask(String name, String startTime, String endTime) {
+public class EventTask extends Task {
+    private LocalDate startTime;
+    private LocalDate endTime;
+
+    public EventTask(String name, LocalDate startTime, LocalDate endTime) {
         super(name);
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public EventTask(String name, boolean isDone, String startTime, String endTime) {
+    public EventTask(String name, boolean isDone, LocalDate startTime, LocalDate endTime) {
         super(name, isDone);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -17,7 +20,10 @@ public class EventTask extends Task {
     @Override
     public String toString() {
         return "[" + getSaveCode() + "]" + super.toString() + " (from: "
-                + this.startTime + " to: " + this.endTime + ")";
+                + this.startTime.format(DateTimeFormatter.ofPattern("MMM d yyyy"))
+                + " to: "
+                + this.endTime.format(DateTimeFormatter.ofPattern("MMM d yyyy"))
+                + ")";
     }
 
     @Override
@@ -27,6 +33,10 @@ public class EventTask extends Task {
 
     @Override
     public String getSaveString() {
-        return super.getSaveString() + '\0' + this.startTime + '\0' + this.endTime;
+        return super.getSaveString()
+                + '>'
+                + this.startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                + '>'
+                + this.endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

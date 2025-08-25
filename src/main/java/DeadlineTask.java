@@ -1,20 +1,24 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class DeadlineTask extends Task {
 
-    private String deadline;
+    private LocalDate deadline;
 
-    public DeadlineTask(String name, String deadline) {
+    public DeadlineTask(String name, LocalDate deadline) {
         super(name);
         this.deadline = deadline;
     }
 
-    public DeadlineTask(String name, boolean isDone, String deadline) {
+    public DeadlineTask(String name, boolean isDone, LocalDate deadline) {
         super(name, isDone);
         this.deadline = deadline;
     }
 
     @Override
     public String toString() {
-        return "[" + getSaveCode() + "]" + super.toString() + " (by: " + deadline + ")";
+        return "[" + getSaveCode() + "]" + super.toString() + " (by: "
+                + deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
     }
 
     @Override
@@ -24,6 +28,8 @@ public class DeadlineTask extends Task {
 
     @Override
     public String getSaveString() {
-        return super.getSaveString() + '\0' + this.deadline;
+        return super.getSaveString()
+                + '>'
+                + this.deadline.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

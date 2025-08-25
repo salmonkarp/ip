@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-// import java.time.LocalDate;
+import java.time.LocalDate;
 // import java.time.format.DateTimeFormatter;
 // import java.time.temporal.ChronoUnit;
 
@@ -52,22 +52,6 @@ public class TaskManager {
         }
     }
 
-    public static void printGreetingMessage() {
-        String greetingMessage = """
-                Hello! I'm TaskManager.
-                What can I do for you?""";
-        ;
-        PrintUtil.printWithLines(greetingMessage);
-    }
-
-    public static void printTasks() {
-        String resultMessage = "Here are the tasks in your list!\n";
-        for (Integer i = 0; i < tasks.size(); i += 1) {
-            resultMessage += ((i + 1) + ". " + tasks.get(i).toString() + "\n");
-        }
-        PrintUtil.printWithLines(resultMessage);
-    }
-
     public static String getTasksAsString() {
         String result = "";
         for (Task t : tasks) {
@@ -103,7 +87,7 @@ public class TaskManager {
                 tasks.add(task);
             }
             scanner.close();
-            printTasks();
+            PrintUtil.printTasks(tasks);
         } catch (Exception e) {
             System.out.println("Failed to obtain data in " + LOCAL_DATA_PATH);
             e.printStackTrace();
@@ -111,18 +95,21 @@ public class TaskManager {
     }
 
     public static Task getTaskFromSaveString(String s) {
-        String[] delimitedStrings = s.split("\0");
+        String[] delimitedStrings = s.split(">");
         String taskCode = delimitedStrings[0];
-        if (taskCode.equals("A")) {
+        if (taskCode.equals("A")) { // Normal task
             return new Task(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
-        } else if (taskCode.equals("T")) {
+        } else if (taskCode.equals("T")) { // Todo task
             return new TodoTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
-        } else if (taskCode.equals("D")) {
-            return new DeadlineTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]),
-                    delimitedStrings[2]);
-        } else if (taskCode.equals("E")) {
-            return new EventTask(delimitedStrings[1],
-                    Boolean.parseBoolean(delimitedStrings[2]), delimitedStrings[1], delimitedStrings[2]);
+        } else if (taskCode.equals("D")) { // Deadline task
+            return new DeadlineTask(delimitedStrings[1], // name
+                    Boolean.parseBoolean(delimitedStrings[2]), // isDone
+                    LocalDate.parse(delimitedStrings[3])); // deadline
+        } else if (taskCode.equals("E")) { // Event task
+            return new EventTask(delimitedStrings[1], // name
+                    Boolean.parseBoolean(delimitedStrings[2]), // isDone
+                    LocalDate.parse(delimitedStrings[3]), // startTime
+                    LocalDate.parse(delimitedStrings[4])); // endTime
         } else {
             return null;
         }
@@ -147,7 +134,7 @@ public class TaskManager {
     public static void addDeadlineTask(String[] deadlineTaskDetails) {
         String deadlineNameToAdd = deadlineTaskDetails[0].strip();
         String deadlineTime = deadlineTaskDetails[1].strip();
-        DeadlineTask deadlineTaskToAdd = new DeadlineTask(deadlineNameToAdd, deadlineTime);
+        DeadlineTask deadlineTaskToAdd = new DeadlineTask(deadlineNameToAdd, LocalDate.parse(deadlineTime));
         tasks.add(deadlineTaskToAdd);
         PrintUtil.printWithLines("I've added a new deadline task: " + deadlineTaskToAdd.toString()
                 + "\nYou have " + tasks.size() + " tasks now.");
@@ -157,7 +144,9 @@ public class TaskManager {
         String eventNameToAdd = eventTaskDetails[0].strip();
         String eventStartTime = eventTaskDetails[1].strip();
         String eventEndTime = eventTaskDetails[2].strip();
-        EventTask eventTaskToAdd = new EventTask(eventNameToAdd, eventStartTime, eventEndTime);
+        EventTask eventTaskToAdd = new EventTask(eventNameToAdd,
+                LocalDate.parse(eventStartTime),
+                LocalDate.parse(eventEndTime));
         tasks.add(eventTaskToAdd);
         PrintUtil.printWithLines("I've added a new event task: " + eventTaskToAdd.toString()
                 + "\nYou have " + tasks.size() + " tasks now.");
@@ -194,7 +183,7 @@ public class TaskManager {
     }
 
     public static void main(String[] args) {
-        printGreetingMessage();
+        PrintUtil.printGreetingMessage();
         initializeTasks();
         String userInput = "";
         TaskCommand userTaskCommand;
@@ -203,13 +192,19 @@ public class TaskManager {
             System.out.print("\nInsert your input here: ");
             userInput = textScanner.nextLine();
             System.out.print("\n");
+
+            if (userInput.contains(">")) {
+                PrintUtil.printWithLines("Please don't include the character '>'!");
+                continue;
+            }
+
             userTaskCommand = TaskCommand.parseStringInput(userInput);
             switch (userTaskCommand) {
                 case ADD:
                     addNormalTask(userInput);
                     break;
                 case LIST:
-                    printTasks();
+                    PrintUtil.printTasks(tasks);
                     break;
                 case MARK_AS_DONE:
                     markAsDoneFromInputString(userInput);
@@ -226,11 +221,24 @@ public class TaskManager {
                         PrintUtil.printWithLines("Wrong format! Type 'deadline [name] / [deadline]'");
                         break;
                     }
+                    try {
+                        LocalDate.parse(deadlineTaskDetails[1].strip());
+                    } catch (Exception e) {
+                        PrintUtil.printWithLines("Wrong format! Type 'deadline [name] / [deadline]'");
+                        break;
+                    }
                     addDeadlineTask(deadlineTaskDetails);
                     break;
                 case ADD_EVENT:
                     String[] eventTaskDetails = userInput.substring(5).split("/");
                     if (eventTaskDetails.length != 3) {
+                        PrintUtil.printWithLines("Wrong format! Type 'event [name] / [startTime] / [endTime]'");
+                        break;
+                    }
+                    try {
+                        LocalDate.parse(eventTaskDetails[1].strip());
+                        LocalDate.parse(eventTaskDetails[2].strip());
+                    } catch (Exception e) {
                         PrintUtil.printWithLines("Wrong format! Type 'event [name] / [startTime] / [endTime]'");
                         break;
                     }

@@ -38,7 +38,7 @@ public class Task {
     }
 
     public String getSaveString() {
-        return getSaveCode() + '\0' + this.name + '\0' + this.isDone;
+        return getSaveCode() + '>' + this.name + '>' + this.isDone;
     }
 
 }
