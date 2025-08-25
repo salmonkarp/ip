@@ -2,9 +2,9 @@ package taskmanager;
 
 public class TaskManager {
 
-    private static final String LOCAL_DATA_PATH = "./data/tasks.txt";
+    protected static final String LOCAL_DATA_PATH = "./data/tasks.txt";
 
-    private Ui ui = new Ui();
+    private final Ui ui = new Ui();
     private Storage storage = new Storage(LOCAL_DATA_PATH, ui);
     private TaskList tasks = new TaskList();
 

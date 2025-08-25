@@ -5,9 +5,9 @@ import java.util.List;
 
 public class TaskList {
 
-    private static int INITIAL_TASK_LIST_CAPACITY = 100;
+    protected static int INITIAL_TASK_LIST_CAPACITY = 100;
 
-    private List<Task> tasks;
+    private final List<Task> tasks;
 
     public TaskList() {
         tasks = new ArrayList<Task>(INITIAL_TASK_LIST_CAPACITY);
@@ -18,11 +18,11 @@ public class TaskList {
     }
 
     public String getTasksAsString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Task t : tasks) {
-            result += t.getSaveString() + '\n';
+            result.append(t.getSaveString()).append('\n');
         }
-        return result;
+        return result.toString();
     }
 
     public void add(Task t) {

@@ -5,8 +5,15 @@ import java.time.format.DateTimeFormatter;
 
 public class DeadlineTask extends Task {
 
-    private LocalDate deadline;
+    private final LocalDate deadline;
 
+    /**
+     * Returns an DeadlineTask object, which is just a task
+     * with a deadline.
+     * 
+     * @param name     The task name / description.
+     * @param deadline A date in the form of LocalDate object.
+     */
     public DeadlineTask(String name, LocalDate deadline) {
         super(name);
         this.deadline = deadline;
