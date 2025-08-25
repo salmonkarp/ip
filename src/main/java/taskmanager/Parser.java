@@ -2,8 +2,17 @@ package taskmanager;
 
 import java.time.LocalDate;
 
+/**
+ * General utility file that handles user input.
+ * Also contains implementation of TaskCommand used
+ * in TaskManager to handle a limited set of user instructions.
+ */
 public class Parser {
 
+    /**
+     * Helper inner class that defines the limited set of
+     * user instructions available.
+     */
     public static enum TaskCommand {
         ADD,
         LIST,
@@ -17,26 +26,27 @@ public class Parser {
         UNKNOWN;
 
         public static TaskCommand getTaskCommandFromInput(String input) {
-            if (input.startsWith("add "))
+            if (input.startsWith("add ")) {
                 return TaskCommand.ADD;
-            else if (input.equals("list"))
+            } else if (input.equals("list")) {
                 return TaskCommand.LIST;
-            else if (input.startsWith("mark "))
+            } else if (input.startsWith("mark ")) {
                 return TaskCommand.MARK_AS_DONE;
-            else if (input.startsWith("unmark "))
+            } else if (input.startsWith("unmark ")) {
                 return TaskCommand.UNMARK_AS_DONE;
-            else if (input.equals("bye"))
+            } else if (input.equals("bye")) {
                 return TaskCommand.BYE;
-            else if (input.startsWith("todo "))
+            } else if (input.startsWith("todo ")) {
                 return TaskCommand.ADD_TODO;
-            else if (input.startsWith("deadline "))
+            } else if (input.startsWith("deadline ")) {
                 return TaskCommand.ADD_DEADLINE;
-            else if (input.startsWith("event "))
+            } else if (input.startsWith("event ")) {
                 return TaskCommand.ADD_EVENT;
-            else if (input.startsWith("delete "))
+            } else if (input.startsWith("delete ")) {
                 return TaskCommand.DELETE;
-            else
+            } else {
                 return TaskCommand.UNKNOWN;
+            }
         }
 
     }
@@ -64,6 +74,14 @@ public class Parser {
         }
     }
 
+    /**
+     * Processes the rest of user input once we know that user is
+     * attempting to add a new normal task, and inserts said task
+     * into the tasks variable.
+     * @param userInput Input that user has provided prior.
+     * @param tasks List of tasks already present.
+     * @param ui Helper class to print text.
+     */
     public static void handleAddNormalTask(String userInput, TaskList tasks, Ui ui) {
         String taskNameToAdd = userInput.substring(3).strip();
         Task taskToAdd = new Task(taskNameToAdd);
@@ -72,6 +90,14 @@ public class Parser {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
+    /**
+     * Processes the rest of user input once we know that user is
+     * attempting to add a TodoTask, and inserts said task
+     * into the tasks variable.
+     * @param userInput Input that user has provided prior.
+     * @param tasks List of tasks already present.
+     * @param ui Helper class to print text.
+     */
     public static void handleAddTodoTask(String userInput, TaskList tasks, Ui ui) {
         String todoNameToAdd = userInput.substring(4).strip();
         TodoTask todoTaskToAdd = new TodoTask(todoNameToAdd);
@@ -80,6 +106,14 @@ public class Parser {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
+    /**
+     * Processes the rest of user input once we know that user is
+     * attempting to add a DeadlineTask, and inserts said task
+     * into the tasks variable.
+     * @param userInput Input that user has provided prior.
+     * @param tasks List of tasks already present.
+     * @param ui Helper class to print text.
+     */
     public static void handleAddDeadlineTask(String userInput, TaskList tasks, Ui ui) {
         String[] deadlineTaskDetails = userInput.substring(8).split("/");
         if (deadlineTaskDetails.length != 2) {
@@ -100,6 +134,14 @@ public class Parser {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
+    /**
+     * Processes the rest of user input once we know that user is
+     * attempting to add an EventTask, and inserts said task
+     * into the tasks variable.
+     * @param userInput Input that user has provided prior.
+     * @param tasks List of tasks already present.
+     * @param ui Helper class to print text.
+     */
     public static void handleAddEventTask(String userInput, TaskList tasks, Ui ui) {
         String[] eventTaskDetails = userInput.substring(5).split("/");
         if (eventTaskDetails.length != 3) {
@@ -124,6 +166,13 @@ public class Parser {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
+    /**
+     * Processes the rest of user input once we know that user is
+     * attempting to mark a task as done, and updates said task.
+     * @param userInput Input that user has provided prior.
+     * @param tasks List of tasks already present.
+     * @param ui Helper class to print text.
+     */
     public static void handleMarkAsDone(String userInput, TaskList tasks, Ui ui) {
         try {
             Integer taskIndexToMark = Integer.parseInt(userInput.substring(4).strip()) - 1;
@@ -139,6 +188,13 @@ public class Parser {
 
     }
 
+    /**
+     * Processes the rest of user input once we know that user is
+     * attempting to mark a task as not done, and updates said task.
+     * @param userInput Input that user has provided prior.
+     * @param tasks List of tasks already present.
+     * @param ui Helper class to print text.
+     */
     public static void handleMarkAsUndone(String userInput, TaskList tasks, Ui ui) {
         try {
             Integer taskIndexToMark = Integer.parseInt(userInput.substring(6).strip()) - 1;
@@ -154,6 +210,13 @@ public class Parser {
 
     }
 
+    /**
+     * Processes the rest of user input once we know that user is
+     * attempting to delete a task, and deletes said task.
+     * @param userInput Input that user has provided prior.
+     * @param tasks List of tasks already present.
+     * @param ui Helper class to print text.
+     */
     public static void handleDeleteTask(String userInput, TaskList tasks, Ui ui) {
         try {
             int taskIndexToDelete = Integer.parseInt(userInput.substring(6).strip()) - 1;
