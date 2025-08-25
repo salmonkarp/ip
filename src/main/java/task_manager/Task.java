@@ -1,3 +1,5 @@
+package task_manager;
+
 public class Task {
     private String name;
     private boolean isDone;

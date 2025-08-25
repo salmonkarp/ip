@@ -1,3 +1,5 @@
+package task_manager;
+
 import java.util.Scanner;
 
 public class Ui {

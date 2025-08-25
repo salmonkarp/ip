@@ -1,3 +1,5 @@
+package task_manager;
+
 public class TaskManager {
 
     private static final String LOCAL_DATA_PATH = "./data/tasks.txt";
