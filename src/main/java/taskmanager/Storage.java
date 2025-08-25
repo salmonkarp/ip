@@ -13,6 +13,14 @@ public class Storage {
         loadedTasks = new TaskList();
         try {
             File saveFile = new File(filePath);
+            File parentDir = saveFile.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                boolean isSuccessful = parentDir.mkdirs();  // create ./data/ if missing
+            }
+            if (!saveFile.exists()) {
+                boolean isSuccessful = saveFile.createNewFile();
+                System.out.println("No save file found. Created a new one at " + filePath);
+            }
             Scanner scanner = new Scanner(saveFile);
             while (scanner.hasNextLine()) {
                 String rawString = scanner.nextLine();
