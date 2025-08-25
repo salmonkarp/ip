@@ -1,4 +1,4 @@
-public final class PrintUtil {
+public class Ui {
     public static String addEnclosingLines(String input) {
         return """
                 ____________________________________________________________
@@ -25,5 +25,13 @@ public final class PrintUtil {
             resultMessage += ((i + 1) + ". " + tasks.get(i).toString() + "\n");
         }
         printWithLines(resultMessage);
+    }
+
+    public static void printLine(String s) {
+        System.out.println(s);
+    }
+
+    public static void print(String s) {
+        System.out.print(s);
     }
 }
