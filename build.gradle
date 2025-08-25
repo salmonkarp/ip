@@ -29,7 +29,7 @@ test {
 }
 
 application {
-    mainClass.set("task_manager.TaskManager")
+    mainClass.set("taskmanager.TaskManager")
 }
 
 shadowJar {
