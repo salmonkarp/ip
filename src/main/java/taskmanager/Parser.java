@@ -23,6 +23,7 @@ public class Parser {
         ADD_EVENT,
         DELETE,
         BYE,
+        FIND,
         UNKNOWN;
 
         public static TaskCommand getTaskCommandFromInput(String input) {
@@ -44,6 +45,8 @@ public class Parser {
                 return TaskCommand.ADD_EVENT;
             } else if (input.startsWith("delete ")) {
                 return TaskCommand.DELETE;
+            } else if (input.startsWith("find ")) {
+                return TaskCommand.FIND;
             } else {
                 return TaskCommand.UNKNOWN;
             }
@@ -230,6 +233,28 @@ public class Parser {
         } catch (NumberFormatException e) {
             ui.printWithLines("Format error! Did you put a single number after 'delete'?");
         }
+    }
+
+    /**
+     * Processes the rest of user input once we know that user is
+     * attempting to find a task through a query string, and displays said tasks.
+     * @param userInput Input that user has provided prior.
+     * @param tasks List of tasks already present.
+     * @param ui Helper class to print text.
+     */
+    public static void handleFindTask(String userInput, TaskList tasks, Ui ui) {
+        String query = userInput.substring(5);
+        System.out.println(query);
+        StringBuilder result = new StringBuilder("Here are the matching tasks in your list:\n");
+        int counter = 1;
+        for (int i = 0; i < tasks.size(); i += 1) {
+            Task currentTask = tasks.get(i);
+            if (currentTask.getName().contains(query)) {
+                result.append(counter + ". " + currentTask.toString() + '\n');
+                counter += 1;
+            }
+        }
+        ui.printWithLines(result.toString());
     }
 
 }
