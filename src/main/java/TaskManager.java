@@ -74,10 +74,6 @@ public class TaskManager {
     public static void saveTasksToLocal() {
         String stringifiedTasks = getTasksAsString();
 
-        // debug statements, TODO: Comment later
-        // System.out.println("Now saving to " + LOCAL_DATA_PATH);
-        // System.out.println(stringifiedTasks);
-
         try {
             FileWriter fileWriter = new FileWriter(LOCAL_DATA_PATH);
             fileWriter.write(stringifiedTasks);
@@ -97,7 +93,6 @@ public class TaskManager {
             while (scanner.hasNextLine()) {
                 String rawString = scanner.nextLine();
                 Task task = getTaskFromSaveString(rawString);
-                // System.out.println(task);
                 if (task == null) {
                     continue;
                 }
@@ -109,13 +104,11 @@ public class TaskManager {
             System.out.println("Failed to obtain data in " + LOCAL_DATA_PATH);
             e.printStackTrace();
         }
-        // System.out.println(tasks);
     }
 
     public static Task getTaskFromSaveString(String s) {
         String[] delimitedStrings = s.split("\0");
         String taskCode = delimitedStrings[0];
-        // System.out.println("line is " + s);
         if (taskCode.equals("A")) {
             return new Task(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
         } else if (taskCode.equals("T")) {
