@@ -3,8 +3,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import java.time.LocalDate;
-// import java.time.format.DateTimeFormatter;
-// import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,7 @@ public class TaskManager {
     public static List<Task> tasks = new ArrayList<Task>(100);
     public static final String LOCAL_DATA_PATH = "./data/tasks.txt";
 
-    public static enum TaskCommand {
+    private static enum TaskCommand {
         ADD,
         LIST,
         MARK_AS_DONE,
@@ -52,7 +50,7 @@ public class TaskManager {
         }
     }
 
-    public static String getTasksAsString() {
+    private static String getTasksAsString() {
         String result = "";
         for (Task t : tasks) {
             result += t.getSaveString() + '\n';
@@ -60,7 +58,7 @@ public class TaskManager {
         return result;
     }
 
-    public static void saveTasksToLocal() {
+    private static void saveTasksToLocal() {
         String stringifiedTasks = getTasksAsString();
         try {
             FileWriter fileWriter = new FileWriter(LOCAL_DATA_PATH);
@@ -74,7 +72,7 @@ public class TaskManager {
 
     }
 
-    public static void initializeTasks() {
+    private static void initializeTasks() {
         try {
             File saveFile = new File(LOCAL_DATA_PATH);
             Scanner scanner = new Scanner(saveFile);
@@ -94,7 +92,7 @@ public class TaskManager {
         }
     }
 
-    public static Task getTaskFromSaveString(String s) {
+    private static Task getTaskFromSaveString(String s) {
         String[] delimitedStrings = s.split(">");
         String taskCode = delimitedStrings[0];
         if (taskCode.equals("A")) { // Normal task
@@ -115,7 +113,7 @@ public class TaskManager {
         }
     }
 
-    public static void addNormalTask(String userInput) {
+    private static void addNormalTask(String userInput) {
         String taskNameToAdd = userInput.substring(3).strip();
         Task taskToAdd = new Task(taskNameToAdd);
         tasks.add(taskToAdd);
@@ -123,7 +121,7 @@ public class TaskManager {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    public static void addTodoTask(String userInput) {
+    private static void addTodoTask(String userInput) {
         String todoNameToAdd = userInput.substring(4).strip();
         TodoTask todoTaskToAdd = new TodoTask(todoNameToAdd);
         tasks.add(todoTaskToAdd);
@@ -131,7 +129,7 @@ public class TaskManager {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    public static void addDeadlineTask(String[] deadlineTaskDetails) {
+    private static void addDeadlineTask(String[] deadlineTaskDetails) {
         String deadlineNameToAdd = deadlineTaskDetails[0].strip();
         String deadlineTime = deadlineTaskDetails[1].strip();
         DeadlineTask deadlineTaskToAdd = new DeadlineTask(deadlineNameToAdd, LocalDate.parse(deadlineTime));
@@ -140,7 +138,7 @@ public class TaskManager {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    public static void addEventTask(String[] eventTaskDetails) {
+    private static void addEventTask(String[] eventTaskDetails) {
         String eventNameToAdd = eventTaskDetails[0].strip();
         String eventStartTime = eventTaskDetails[1].strip();
         String eventEndTime = eventTaskDetails[2].strip();
@@ -152,7 +150,7 @@ public class TaskManager {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    public static void markAsDoneFromInputString(String userInput) {
+    private static void markAsDoneFromInputString(String userInput) {
         try {
             Integer taskIndexToMark = Integer.parseInt(userInput.substring(4).strip()) - 1;
             if (taskIndexToMark < 0 || taskIndexToMark >= tasks.size()) {
@@ -167,7 +165,7 @@ public class TaskManager {
 
     }
 
-    public static void markAsUndoneFromInputString(String userInput) {
+    private static void markAsUndoneFromInputString(String userInput) {
         try {
             Integer taskIndexToMark = Integer.parseInt(userInput.substring(6).strip()) - 1;
             if (taskIndexToMark < 0 || taskIndexToMark >= tasks.size()) {
