@@ -1,5 +1,3 @@
-import java.util.List;
-
 public final class PrintUtil {
     public static String addEnclosingLines(String input) {
         return """
@@ -21,7 +19,7 @@ public final class PrintUtil {
         printWithLines(greetingMessage);
     }
 
-    public static void printTasks(List<Task> tasks) {
+    public static void printTasks(TaskList tasks) {
         String resultMessage = "Here are the tasks in your list!\n";
         for (Integer i = 0; i < tasks.size(); i += 1) {
             resultMessage += ((i + 1) + ". " + tasks.get(i).toString() + "\n");

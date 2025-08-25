@@ -4,62 +4,16 @@ import java.io.IOException;
 
 import java.time.LocalDate;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class TaskManager {
 
-    public Scanner textScanner = new Scanner(System.in);
-    public List<Task> tasks = new ArrayList<Task>(100);
-    public static final String LOCAL_DATA_PATH = "./data/tasks.txt";
-
-    private static enum TaskCommand {
-        ADD,
-        LIST,
-        MARK_AS_DONE,
-        UNMARK_AS_DONE,
-        ADD_TODO,
-        ADD_DEADLINE,
-        ADD_EVENT,
-        DELETE,
-        BYE,
-        UNKNOWN;
-
-        public static TaskCommand parseStringInput(String input) {
-            if (input.startsWith("add "))
-                return TaskCommand.ADD;
-            else if (input.equals("list"))
-                return TaskCommand.LIST;
-            else if (input.startsWith("mark "))
-                return TaskCommand.MARK_AS_DONE;
-            else if (input.startsWith("unmark "))
-                return TaskCommand.UNMARK_AS_DONE;
-            else if (input.equals("bye"))
-                return TaskCommand.BYE;
-            else if (input.startsWith("todo "))
-                return TaskCommand.ADD_TODO;
-            else if (input.startsWith("deadline "))
-                return TaskCommand.ADD_DEADLINE;
-            else if (input.startsWith("event "))
-                return TaskCommand.ADD_EVENT;
-            else if (input.startsWith("delete "))
-                return TaskCommand.DELETE;
-            else
-                return TaskCommand.UNKNOWN;
-        }
-    }
-
-    private String getTasksAsString() {
-        String result = "";
-        for (Task t : tasks) {
-            result += t.getSaveString() + '\n';
-        }
-        return result;
-    }
+    private Scanner textScanner = new Scanner(System.in);
+    private TaskList tasks = new TaskList(100);
+    private static final String LOCAL_DATA_PATH = "./data/tasks.txt";
 
     private void saveTasksToLocal() {
-        String stringifiedTasks = getTasksAsString();
+        String stringifiedTasks = tasks.getTasksAsString();
         try {
             FileWriter fileWriter = new FileWriter(LOCAL_DATA_PATH);
             fileWriter.write(stringifiedTasks);
@@ -78,7 +32,7 @@ public class TaskManager {
             Scanner scanner = new Scanner(saveFile);
             while (scanner.hasNextLine()) {
                 String rawString = scanner.nextLine();
-                Task task = getTaskFromSaveString(rawString);
+                Task task = Parser.getTaskFromSaveString(rawString);
                 if (task == null) {
                     continue;
                 }
@@ -89,27 +43,6 @@ public class TaskManager {
         } catch (Exception e) {
             System.out.println("Failed to obtain data in " + LOCAL_DATA_PATH);
             e.printStackTrace();
-        }
-    }
-
-    private static Task getTaskFromSaveString(String s) {
-        String[] delimitedStrings = s.split(">");
-        String taskCode = delimitedStrings[0];
-        if (taskCode.equals("A")) { // Normal task
-            return new Task(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
-        } else if (taskCode.equals("T")) { // Todo task
-            return new TodoTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
-        } else if (taskCode.equals("D")) { // Deadline task
-            return new DeadlineTask(delimitedStrings[1], // name
-                    Boolean.parseBoolean(delimitedStrings[2]), // isDone
-                    LocalDate.parse(delimitedStrings[3])); // deadline
-        } else if (taskCode.equals("E")) { // Event task
-            return new EventTask(delimitedStrings[1], // name
-                    Boolean.parseBoolean(delimitedStrings[2]), // isDone
-                    LocalDate.parse(delimitedStrings[3]), // startTime
-                    LocalDate.parse(delimitedStrings[4])); // endTime
-        } else {
-            return null;
         }
     }
 
@@ -129,7 +62,18 @@ public class TaskManager {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    private void addDeadlineTask(String[] deadlineTaskDetails) {
+    private void addDeadlineTask(String userInput) {
+        String[] deadlineTaskDetails = userInput.substring(8).split("/");
+        if (deadlineTaskDetails.length != 2) {
+            PrintUtil.printWithLines("Wrong format! Type 'deadline [name] / [deadline]'");
+            return;
+        }
+        try {
+            LocalDate.parse(deadlineTaskDetails[1].strip());
+        } catch (Exception e) {
+            PrintUtil.printWithLines("Wrong format! Type 'deadline [name] / [deadline]'");
+            return;
+        }
         String deadlineNameToAdd = deadlineTaskDetails[0].strip();
         String deadlineTime = deadlineTaskDetails[1].strip();
         DeadlineTask deadlineTaskToAdd = new DeadlineTask(deadlineNameToAdd, LocalDate.parse(deadlineTime));
@@ -138,7 +82,19 @@ public class TaskManager {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    private void addEventTask(String[] eventTaskDetails) {
+    private void addEventTask(String userInput) {
+        String[] eventTaskDetails = userInput.substring(5).split("/");
+        if (eventTaskDetails.length != 3) {
+            PrintUtil.printWithLines("Wrong format! Type 'event [name] / [startTime] / [endTime]'");
+            return;
+        }
+        try {
+            LocalDate.parse(eventTaskDetails[1].strip());
+            LocalDate.parse(eventTaskDetails[2].strip());
+        } catch (Exception e) {
+            PrintUtil.printWithLines("Wrong format! Type 'event [name] / [startTime] / [endTime]'");
+            return;
+        }
         String eventNameToAdd = eventTaskDetails[0].strip();
         String eventStartTime = eventTaskDetails[1].strip();
         String eventEndTime = eventTaskDetails[2].strip();
@@ -180,12 +136,27 @@ public class TaskManager {
 
     }
 
+    private void deleteTask(String userInput) {
+        try {
+            int taskIndexToDelete = Integer.parseInt(userInput.substring(6).strip()) - 1;
+            if (taskIndexToDelete < 0 || taskIndexToDelete >= tasks.size()) {
+                PrintUtil.printWithLines("Index out of range. Are you sure you inputted the right index?");
+                return;
+            }
+            Task deletedTask = tasks.remove(taskIndexToDelete);
+            PrintUtil.printWithLines("I've removed this task: " + deletedTask.toString()
+                    + "\nYou have " + tasks.size() + " tasks now.");
+        } catch (NumberFormatException e) {
+            PrintUtil.printWithLines("Format error! Did you put a single number after 'delete'?");
+        }
+    }
+
     public TaskManager(String filePath) {
         PrintUtil.printGreetingMessage();
         initializeTasks();
 
         String userInput = "";
-        TaskCommand userTaskCommand;
+        Parser.TaskCommand userTaskCommand;
 
         while (true) {
             System.out.print("\nInsert your input here: ");
@@ -197,7 +168,7 @@ public class TaskManager {
                 continue;
             }
 
-            userTaskCommand = TaskCommand.parseStringInput(userInput);
+            userTaskCommand = Parser.TaskCommand.parseStringInput(userInput);
             switch (userTaskCommand) {
                 case ADD:
                     addNormalTask(userInput);
@@ -215,48 +186,13 @@ public class TaskManager {
                     addTodoTask(userInput);
                     break;
                 case ADD_DEADLINE:
-                    String[] deadlineTaskDetails = userInput.substring(8).split("/");
-                    if (deadlineTaskDetails.length != 2) {
-                        PrintUtil.printWithLines("Wrong format! Type 'deadline [name] / [deadline]'");
-                        break;
-                    }
-                    try {
-                        LocalDate.parse(deadlineTaskDetails[1].strip());
-                    } catch (Exception e) {
-                        PrintUtil.printWithLines("Wrong format! Type 'deadline [name] / [deadline]'");
-                        break;
-                    }
-                    addDeadlineTask(deadlineTaskDetails);
+                    addDeadlineTask(userInput);
                     break;
                 case ADD_EVENT:
-                    String[] eventTaskDetails = userInput.substring(5).split("/");
-                    if (eventTaskDetails.length != 3) {
-                        PrintUtil.printWithLines("Wrong format! Type 'event [name] / [startTime] / [endTime]'");
-                        break;
-                    }
-                    try {
-                        LocalDate.parse(eventTaskDetails[1].strip());
-                        LocalDate.parse(eventTaskDetails[2].strip());
-                    } catch (Exception e) {
-                        PrintUtil.printWithLines("Wrong format! Type 'event [name] / [startTime] / [endTime]'");
-                        break;
-                    }
-                    addEventTask(eventTaskDetails);
+                    addEventTask(userInput);
                     break;
                 case DELETE:
-                    try {
-                        int taskIndexToDelete = Integer.parseInt(userInput.substring(6).strip()) - 1;
-                        if (taskIndexToDelete < 0 || taskIndexToDelete >= tasks.size()) {
-                            PrintUtil.printWithLines("Index out of range. Are you sure you inputted the right index?");
-                            break;
-                        }
-                        Task deletedTask = tasks.remove(taskIndexToDelete);
-                        PrintUtil.printWithLines("I've removed this task: " + deletedTask.toString()
-                                + "\nYou have " + tasks.size() + " tasks now.");
-                    } catch (NumberFormatException e) {
-                        PrintUtil.printWithLines("Format error! Did you put a single number after 'delete'?");
-                    }
-
+                    deleteTask(userInput);
                     break;
                 case BYE:
                     PrintUtil.printWithLines("Bye. Hope to see you again soon!");
