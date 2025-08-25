@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class TaskManager {
 
-    public static Scanner textScanner = new Scanner(System.in);
-    public static List<Task> tasks = new ArrayList<Task>(100);
+    public Scanner textScanner = new Scanner(System.in);
+    public List<Task> tasks = new ArrayList<Task>(100);
     public static final String LOCAL_DATA_PATH = "./data/tasks.txt";
 
     private static enum TaskCommand {
@@ -50,7 +50,7 @@ public class TaskManager {
         }
     }
 
-    private static String getTasksAsString() {
+    private String getTasksAsString() {
         String result = "";
         for (Task t : tasks) {
             result += t.getSaveString() + '\n';
@@ -58,7 +58,7 @@ public class TaskManager {
         return result;
     }
 
-    private static void saveTasksToLocal() {
+    private void saveTasksToLocal() {
         String stringifiedTasks = getTasksAsString();
         try {
             FileWriter fileWriter = new FileWriter(LOCAL_DATA_PATH);
@@ -72,7 +72,7 @@ public class TaskManager {
 
     }
 
-    private static void initializeTasks() {
+    private void initializeTasks() {
         try {
             File saveFile = new File(LOCAL_DATA_PATH);
             Scanner scanner = new Scanner(saveFile);
@@ -113,7 +113,7 @@ public class TaskManager {
         }
     }
 
-    private static void addNormalTask(String userInput) {
+    private void addNormalTask(String userInput) {
         String taskNameToAdd = userInput.substring(3).strip();
         Task taskToAdd = new Task(taskNameToAdd);
         tasks.add(taskToAdd);
@@ -121,7 +121,7 @@ public class TaskManager {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    private static void addTodoTask(String userInput) {
+    private void addTodoTask(String userInput) {
         String todoNameToAdd = userInput.substring(4).strip();
         TodoTask todoTaskToAdd = new TodoTask(todoNameToAdd);
         tasks.add(todoTaskToAdd);
@@ -129,7 +129,7 @@ public class TaskManager {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    private static void addDeadlineTask(String[] deadlineTaskDetails) {
+    private void addDeadlineTask(String[] deadlineTaskDetails) {
         String deadlineNameToAdd = deadlineTaskDetails[0].strip();
         String deadlineTime = deadlineTaskDetails[1].strip();
         DeadlineTask deadlineTaskToAdd = new DeadlineTask(deadlineNameToAdd, LocalDate.parse(deadlineTime));
@@ -138,7 +138,7 @@ public class TaskManager {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    private static void addEventTask(String[] eventTaskDetails) {
+    private void addEventTask(String[] eventTaskDetails) {
         String eventNameToAdd = eventTaskDetails[0].strip();
         String eventStartTime = eventTaskDetails[1].strip();
         String eventEndTime = eventTaskDetails[2].strip();
@@ -150,7 +150,7 @@ public class TaskManager {
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    private static void markAsDoneFromInputString(String userInput) {
+    private void markAsDoneFromInputString(String userInput) {
         try {
             Integer taskIndexToMark = Integer.parseInt(userInput.substring(4).strip()) - 1;
             if (taskIndexToMark < 0 || taskIndexToMark >= tasks.size()) {
@@ -165,7 +165,7 @@ public class TaskManager {
 
     }
 
-    private static void markAsUndoneFromInputString(String userInput) {
+    private void markAsUndoneFromInputString(String userInput) {
         try {
             Integer taskIndexToMark = Integer.parseInt(userInput.substring(6).strip()) - 1;
             if (taskIndexToMark < 0 || taskIndexToMark >= tasks.size()) {
@@ -180,9 +180,10 @@ public class TaskManager {
 
     }
 
-    public static void main(String[] args) {
+    public TaskManager(String filePath) {
         PrintUtil.printGreetingMessage();
         initializeTasks();
+
         String userInput = "";
         TaskCommand userTaskCommand;
 
@@ -267,5 +268,9 @@ public class TaskManager {
             }
 
         }
+    }
+
+    public static void main(String[] args) {
+        new TaskManager(LOCAL_DATA_PATH);
     }
 }
