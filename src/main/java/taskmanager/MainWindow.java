@@ -38,6 +38,12 @@ public class MainWindow extends AnchorPane {
     /** Injects the TaskManager instance */
     public void setTaskManager(TaskManager d) {
         taskManager = d;
+        String greetingMessage = "Hi, I'm TaskManager!\n";
+        greetingMessage += taskManager.getResponse("list");
+
+        dialogContainer.getChildren().addAll(
+                DialogBox.getDukeDialog(greetingMessage, dukeImage)
+        );
     }
 
     /**
