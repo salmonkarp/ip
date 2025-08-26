@@ -78,7 +78,7 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
-        DialogBox dialogBox = new DialogBox("Hello!", botImage);
+        DialogBox dialogBox = DialogBox.getDukeDialog("Hi!", botImage);
         dialogContainer.getChildren().addAll(dialogBox);
     }
 
@@ -86,8 +86,8 @@ public class Main extends Application {
         String userText = userInput.getText();
         String dukeText = taskManager.getResponse(userInput.getText());
         dialogContainer.getChildren().addAll(
-                new DialogBox(userText, userImage),
-                new DialogBox(dukeText, botImage)
+                DialogBox.getUserDialog(userText, userImage),
+                DialogBox.getDukeDialog(dukeText, botImage)
         );
         userInput.clear();
     }

@@ -59,22 +59,24 @@ public class Parser {
     public static Task getTaskFromSaveString(String s) {
         String[] delimitedStrings = s.split(SAVE_DELIMITER);
         String taskCode = delimitedStrings[0];
-        if (taskCode.equals("A")) { // Normal task
-            return new Task(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
-        } else if (taskCode.equals("T")) { // Todo task
-            return new TodoTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
-        } else if (taskCode.equals("D")) { // Deadline task
-            return new DeadlineTask(delimitedStrings[1], // - name
-                    Boolean.parseBoolean(delimitedStrings[2]), // - isDone
-                    LocalDate.parse(delimitedStrings[3])); // - deadline
-        } else if (taskCode.equals("E")) { // Event task
-            return new EventTask(delimitedStrings[1], // - name
-                    Boolean.parseBoolean(delimitedStrings[2]), // - isDone
-                    LocalDate.parse(delimitedStrings[3]), // - startTime
-                    LocalDate.parse(delimitedStrings[4])); // - endTime
-        } else {
-            return null;
-        }
+        return switch (taskCode) {
+        case "A" ->  // Normal task
+                new Task(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
+        case "T" ->  // TodoTask
+                new TodoTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
+        case "D" ->  // Deadline task
+                new DeadlineTask(delimitedStrings[1], // - name
+                        Boolean.parseBoolean(delimitedStrings[2]), // - isDone
+                        LocalDate.parse(delimitedStrings[3])); // - deadline
+
+        case "E" ->  // Event task
+                new EventTask(delimitedStrings[1], // - name
+                        Boolean.parseBoolean(delimitedStrings[2]), // - isDone
+                        LocalDate.parse(delimitedStrings[3]), // - startTime
+                        LocalDate.parse(delimitedStrings[4])); // - endTime
+
+        default -> null;
+        };
     }
 
     /**
@@ -83,13 +85,12 @@ public class Parser {
      * into the tasks variable.
      * @param userInput Input that user has provided prior.
      * @param tasks List of tasks already present.
-     * @param ui Helper class to print text.
      */
-    public static void handleAddNormalTask(String userInput, TaskList tasks, Ui ui) {
+    public static String handleAddNormalTask(String userInput, TaskList tasks) {
         String taskNameToAdd = userInput.substring(3).strip();
         Task taskToAdd = new Task(taskNameToAdd);
         tasks.add(taskToAdd);
-        ui.printWithLines("I've added a new task: " + taskToAdd.toString()
+        return ("I've added a new task: " + taskToAdd.toString()
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
@@ -99,13 +100,12 @@ public class Parser {
      * into the tasks variable.
      * @param userInput Input that user has provided prior.
      * @param tasks List of tasks already present.
-     * @param ui Helper class to print text.
      */
-    public static void handleAddTodoTask(String userInput, TaskList tasks, Ui ui) {
+    public static String handleAddTodoTask(String userInput, TaskList tasks) {
         String todoNameToAdd = userInput.substring(4).strip();
         TodoTask todoTaskToAdd = new TodoTask(todoNameToAdd);
         tasks.add(todoTaskToAdd);
-        ui.printWithLines("I've added a new todo task: " + todoTaskToAdd.toString()
+        return ("I've added a new todo task: " + todoTaskToAdd.toString()
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
@@ -115,25 +115,22 @@ public class Parser {
      * into the tasks variable.
      * @param userInput Input that user has provided prior.
      * @param tasks List of tasks already present.
-     * @param ui Helper class to print text.
      */
-    public static void handleAddDeadlineTask(String userInput, TaskList tasks, Ui ui) {
+    public static String handleAddDeadlineTask(String userInput, TaskList tasks) {
         String[] deadlineTaskDetails = userInput.substring(8).split("/");
         if (deadlineTaskDetails.length != 2) {
-            ui.printWithLines("Wrong format! Type 'deadline [name] / [deadline]'");
-            return;
+            return "Wrong format! Type 'deadline [name] / [deadline]'";
         }
         try {
             LocalDate.parse(deadlineTaskDetails[1].strip());
         } catch (Exception e) {
-            ui.printWithLines("Wrong format! Type 'deadline [name] / [deadline]'");
-            return;
+             return "Wrong format! Type 'deadline [name] / [deadline]'";
         }
         String deadlineNameToAdd = deadlineTaskDetails[0].strip();
         String deadlineTime = deadlineTaskDetails[1].strip();
         DeadlineTask deadlineTaskToAdd = new DeadlineTask(deadlineNameToAdd, LocalDate.parse(deadlineTime));
         tasks.add(deadlineTaskToAdd);
-        ui.printWithLines("I've added a new deadline task: " + deadlineTaskToAdd.toString()
+        return ("I've added a new deadline task: " + deadlineTaskToAdd.toString()
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
@@ -143,20 +140,17 @@ public class Parser {
      * into the tasks variable.
      * @param userInput Input that user has provided prior.
      * @param tasks List of tasks already present.
-     * @param ui Helper class to print text.
      */
-    public static void handleAddEventTask(String userInput, TaskList tasks, Ui ui) {
+    public static String handleAddEventTask(String userInput, TaskList tasks) {
         String[] eventTaskDetails = userInput.substring(5).split("/");
         if (eventTaskDetails.length != 3) {
-            ui.printWithLines("Wrong format! Type 'event [name] / [startTime] / [endTime]'");
-            return;
+            return ("Wrong format! Type 'event [name] / [startTime] / [endTime]'");
         }
         try {
             LocalDate.parse(eventTaskDetails[1].strip());
             LocalDate.parse(eventTaskDetails[2].strip());
         } catch (Exception e) {
-            ui.printWithLines("Wrong format! Type 'event [name] / [startTime] / [endTime]'");
-            return;
+            return ("Wrong format! Type 'event [name] / [startTime] / [endTime]'");
         }
         String eventNameToAdd = eventTaskDetails[0].strip();
         String eventStartTime = eventTaskDetails[1].strip();
@@ -165,7 +159,7 @@ public class Parser {
                 LocalDate.parse(eventStartTime),
                 LocalDate.parse(eventEndTime));
         tasks.add(eventTaskToAdd);
-        ui.printWithLines("I've added a new event task: " + eventTaskToAdd.toString()
+        return ("I've added a new event task: " + eventTaskToAdd.toString()
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
@@ -174,19 +168,18 @@ public class Parser {
      * attempting to mark a task as done, and updates said task.
      * @param userInput Input that user has provided prior.
      * @param tasks List of tasks already present.
-     * @param ui Helper class to print text.
      */
-    public static void handleMarkAsDone(String userInput, TaskList tasks, Ui ui) {
+    public static String handleMarkAsDone(String userInput, TaskList tasks) {
         try {
             Integer taskIndexToMark = Integer.parseInt(userInput.substring(4).strip()) - 1;
             if (taskIndexToMark < 0 || taskIndexToMark >= tasks.size()) {
-                ui.printWithLines("Index out of range. Are you sure you inputted the right index?");
+                return ("Index out of range. Are you sure you inputted the right index?");
             } else {
                 tasks.get(taskIndexToMark).markDone();
-                ui.printWithLines("Nice! I've marked this task as done:\n" + tasks.get(taskIndexToMark));
+                return ("Nice! I've marked this task as done:\n" + tasks.get(taskIndexToMark));
             }
         } catch (NumberFormatException e) {
-            ui.printWithLines("Format error! Did you put a single number after 'mark'?");
+            return ("Format error! Did you put a single number after 'mark'?");
         }
 
     }
@@ -196,19 +189,18 @@ public class Parser {
      * attempting to mark a task as not done, and updates said task.
      * @param userInput Input that user has provided prior.
      * @param tasks List of tasks already present.
-     * @param ui Helper class to print text.
      */
-    public static void handleMarkAsUndone(String userInput, TaskList tasks, Ui ui) {
+    public static String handleMarkAsUndone(String userInput, TaskList tasks) {
         try {
-            Integer taskIndexToMark = Integer.parseInt(userInput.substring(6).strip()) - 1;
+            int taskIndexToMark = Integer.parseInt(userInput.substring(6).strip()) - 1;
             if (taskIndexToMark < 0 || taskIndexToMark >= tasks.size()) {
-                ui.printWithLines("Task was not found. Are you sure you inputted the right index?");
+                return ("Task was not found. Are you sure you inputted the right index?");
             } else {
                 tasks.get(taskIndexToMark).markUndone();
-                ui.printWithLines("Nice! I've unmarked this task as done:\n" + tasks.get(taskIndexToMark));
+                return ("Nice! I've unmarked this task as done:\n" + tasks.get(taskIndexToMark));
             }
         } catch (NumberFormatException e) {
-            ui.printWithLines("Format error! Did you put a number after 'unmark'?");
+            return ("Format error! Did you put a number after 'unmark'?");
         }
 
     }
@@ -218,20 +210,18 @@ public class Parser {
      * attempting to delete a task, and deletes said task.
      * @param userInput Input that user has provided prior.
      * @param tasks List of tasks already present.
-     * @param ui Helper class to print text.
      */
-    public static void handleDeleteTask(String userInput, TaskList tasks, Ui ui) {
+    public static String handleDeleteTask(String userInput, TaskList tasks) {
         try {
             int taskIndexToDelete = Integer.parseInt(userInput.substring(6).strip()) - 1;
             if (taskIndexToDelete < 0 || taskIndexToDelete >= tasks.size()) {
-                ui.printWithLines("Index out of range. Are you sure you inputted the right index?");
-                return;
+                return ("Index out of range. Are you sure you inputted the right index?");
             }
             Task deletedTask = tasks.remove(taskIndexToDelete);
-            ui.printWithLines("I've removed this task: " + deletedTask.toString()
+            return ("I've removed this task: " + deletedTask.toString()
                     + "\nYou have " + tasks.size() + " tasks now.");
         } catch (NumberFormatException e) {
-            ui.printWithLines("Format error! Did you put a single number after 'delete'?");
+           return ("Format error! Did you put a single number after 'delete'?");
         }
     }
 
@@ -240,9 +230,8 @@ public class Parser {
      * attempting to find a task through a query string, and displays said tasks.
      * @param userInput Input that user has provided prior.
      * @param tasks List of tasks already present.
-     * @param ui Helper class to print text.
      */
-    public static void handleFindTask(String userInput, TaskList tasks, Ui ui) {
+    public static String handleFindTask(String userInput, TaskList tasks) {
         String query = userInput.substring(5);
         System.out.println(query);
         StringBuilder result = new StringBuilder("Here are the matching tasks in your list:\n");
@@ -254,7 +243,7 @@ public class Parser {
                 counter += 1;
             }
         }
-        ui.printWithLines(result.toString());
+        return (result.toString());
     }
 
 }

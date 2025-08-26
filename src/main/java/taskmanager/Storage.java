@@ -19,9 +19,8 @@ public class Storage {
      * need to call load() to actually update the programme's
      * actual task list.
      * @param filePath Path of where data is stored in user's device.
-     * @param ui Helper object to help print text.
      */
-    public Storage(String filePath, Ui ui) {
+    public Storage(String filePath) {
         loadedTasks = new TaskList();
         try {
             File saveFile = new File(filePath);
@@ -43,7 +42,7 @@ public class Storage {
                 loadedTasks.add(task);
             }
             scanner.close();
-            ui.printTasks(loadedTasks);
+            PrintHelper.getTaskListAsString(loadedTasks);
         } catch (Exception e) {
             System.out.println("Failed to obtain data in " + filePath);
             e.printStackTrace();
@@ -58,17 +57,16 @@ public class Storage {
      * Saves tasks onto a local file in the user's device.
      * @param tasks List of tasks obtain from main TaskManager process.
      * @param filePath Path of where data should be stored.
-     * @param ui Helper object to help print text.
      */
-    public void save(TaskList tasks, String filePath, Ui ui) {
+    public String save(TaskList tasks, String filePath) {
         String stringifiedTasks = tasks.getTasksAsString();
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             fileWriter.write(stringifiedTasks);
             fileWriter.close();
-            ui.printLine("Successfully wrote to " + filePath);
+            return ("Successfully wrote to " + filePath);
         } catch (IOException e) {
-            ui.printLine("Failed to write to " + filePath);
+            return ("Failed to write to " + filePath);
         }
 
     }
