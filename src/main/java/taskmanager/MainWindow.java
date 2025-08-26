@@ -1,5 +1,8 @@
 package taskmanager;
 
+import java.util.concurrent.TimeUnit;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -42,7 +45,7 @@ public class MainWindow extends AnchorPane {
      * the dialog container. Clears the user input after processing.
      */
     @FXML
-    private void handleUserInput() {
+    private void handleUserInput() throws InterruptedException {
         String input = userInput.getText();
         String response = taskManager.getResponse(input);
         dialogContainer.getChildren().addAll(
@@ -50,5 +53,20 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getDukeDialog(response, dukeImage)
         );
         userInput.clear();
+
+        if (input.equals("bye")) {
+            triggerExit();
+        }
+    }
+
+    private void triggerExit() throws InterruptedException {
+        new Thread(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+                Platform.exit();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }).start();
     }
 }

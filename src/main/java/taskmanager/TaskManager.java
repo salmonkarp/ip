@@ -35,6 +35,7 @@ public class TaskManager {
         case ADD_DEADLINE -> Parser.handleAddDeadlineTask(userInput, tasks);
         case ADD_EVENT -> Parser.handleAddEventTask(userInput, tasks);
         case DELETE -> Parser.handleDeleteTask(userInput, tasks);
+        case SAVE -> storage.save(tasks, LOCAL_DATA_PATH);
         case BYE -> {
             String saveResult = storage.save(tasks, LOCAL_DATA_PATH);
             yield (saveResult + "\nBye. Hope to see you again soon!");

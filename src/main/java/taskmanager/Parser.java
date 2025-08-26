@@ -22,6 +22,7 @@ public class Parser {
         ADD_DEADLINE,
         ADD_EVENT,
         DELETE,
+        SAVE,
         BYE,
         FIND,
         UNKNOWN;
@@ -35,6 +36,8 @@ public class Parser {
                 return TaskCommand.MARK_AS_DONE;
             } else if (input.startsWith("unmark ")) {
                 return TaskCommand.UNMARK_AS_DONE;
+            } else if (input.equals("save")) {
+                return TaskCommand.SAVE;
             } else if (input.equals("bye")) {
                 return TaskCommand.BYE;
             } else if (input.startsWith("todo ")) {
