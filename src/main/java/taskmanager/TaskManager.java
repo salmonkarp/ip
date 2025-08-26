@@ -1,5 +1,7 @@
 package taskmanager;
 
+import javafx.application.Application;
+
 /**
  * A general task manager class that contains the overall
  * logic flow to how the program runs.
@@ -17,9 +19,10 @@ public class TaskManager {
      * This is made into a non-static class to allow later instantiation.
      * @param filePath Path where tasks are stored in user's device
      */
-    public TaskManager(String filePath) {
+    public TaskManager(String filePath, String[] args) {
         ui.printGreetingMessage();
         tasks = storage.load();
+        Application.launch(Ui.class, args);
 
         String userInput = "";
         Parser.TaskCommand userTaskCommand;
@@ -80,6 +83,6 @@ public class TaskManager {
      * @param args Unused arguments.
      */
     public static void main(String[] args) {
-        new TaskManager(LOCAL_DATA_PATH);
+        new TaskManager(LOCAL_DATA_PATH, args);
     }
 }
