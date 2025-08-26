@@ -17,72 +17,67 @@ public class TaskManager {
     /**
      * Returns a TaskManager object.
      * This is made into a non-static class to allow later instantiation.
-     * @param filePath Path where tasks are stored in user's device
      */
-    public TaskManager(String filePath, String[] args) {
-        ui.printGreetingMessage();
+    public TaskManager() {
+//        ui.printGreetingMessage();
         tasks = storage.load();
-        Application.launch(Ui.class, args);
-
+        System.out.println("Hello!");
         String userInput = "";
         Parser.TaskCommand userTaskCommand;
 
-        while (true) {
-            ui.print("\nInsert your input here: ");
-            userInput = ui.getNextLine();
-            ui.print("\n");
-
-            if (userInput.contains(Parser.SAVE_DELIMITER)) {
-                ui.printWithLines("Please don't include the character '" + Parser.SAVE_DELIMITER + "'!");
-                continue;
-            }
-
-            userTaskCommand = Parser.TaskCommand.getTaskCommandFromInput(userInput);
-            switch (userTaskCommand) {
-            case ADD:
-                Parser.handleAddNormalTask(userInput, tasks, ui);
-                break;
-            case LIST:
-                ui.printTasks(tasks);
-                break;
-            case MARK_AS_DONE:
-                Parser.handleMarkAsDone(userInput, tasks, ui);
-                break;
-            case UNMARK_AS_DONE:
-                Parser.handleMarkAsUndone(userInput, tasks, ui);
-                break;
-            case ADD_TODO:
-                Parser.handleAddTodoTask(userInput, tasks, ui);
-                break;
-            case ADD_DEADLINE:
-                Parser.handleAddDeadlineTask(userInput, tasks, ui);
-                break;
-            case ADD_EVENT:
-                Parser.handleAddEventTask(userInput, tasks, ui);
-                break;
-            case DELETE:
-                Parser.handleDeleteTask(userInput, tasks, ui);
-                break;
-            case BYE:
-                ui.printWithLines("Bye. Hope to see you again soon!");
-                storage.save(tasks, LOCAL_DATA_PATH, ui);
-                return;
-            case FIND:
-                Parser.handleFindTask(userInput, tasks, ui);
-                break;
-            default:
-                ui.printWithLines("Unknown command. Try again.");
-                break;
-            }
-
-        }
+//        while (true) {
+//            ui.print("\nInsert your input here: ");
+//            userInput = ui.getNextLine();
+//            ui.print("\n");
+//
+//            if (userInput.contains(Parser.SAVE_DELIMITER)) {
+//                ui.printWithLines("Please don't include the character '" + Parser.SAVE_DELIMITER + "'!");
+//                continue;
+//            }
+//
+//            userTaskCommand = Parser.TaskCommand.getTaskCommandFromInput(userInput);
+//            switch (userTaskCommand) {
+//            case ADD:
+//                Parser.handleAddNormalTask(userInput, tasks, ui);
+//                break;
+//            case LIST:
+//                ui.printTasks(tasks);
+//                break;
+//            case MARK_AS_DONE:
+//                Parser.handleMarkAsDone(userInput, tasks, ui);
+//                break;
+//            case UNMARK_AS_DONE:
+//                Parser.handleMarkAsUndone(userInput, tasks, ui);
+//                break;
+//            case ADD_TODO:
+//                Parser.handleAddTodoTask(userInput, tasks, ui);
+//                break;
+//            case ADD_DEADLINE:
+//                Parser.handleAddDeadlineTask(userInput, tasks, ui);
+//                break;
+//            case ADD_EVENT:
+//                Parser.handleAddEventTask(userInput, tasks, ui);
+//                break;
+//            case DELETE:
+//                Parser.handleDeleteTask(userInput, tasks, ui);
+//                break;
+//            case BYE:
+//                ui.printWithLines("Bye. Hope to see you again soon!");
+//                storage.save(tasks, LOCAL_DATA_PATH, ui);
+//                return;
+//            case FIND:
+//                Parser.handleFindTask(userInput, tasks, ui);
+//                break;
+//            default:
+//                ui.printWithLines("Unknown command. Try again.");
+//                break;
+//            }
+//
+//        }
     }
 
-    /**
-     * Entrance point to program.
-     * @param args Unused arguments.
-     */
-    public static void main(String[] args) {
-        new TaskManager(LOCAL_DATA_PATH, args);
+    public String getResponse(String input) {
+        return "Duke heard: " + input;
     }
+
 }
