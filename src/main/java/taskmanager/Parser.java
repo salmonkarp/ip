@@ -60,21 +60,19 @@ public class Parser {
         String[] delimitedStrings = s.split(SAVE_DELIMITER);
         String taskCode = delimitedStrings[0];
         return switch (taskCode) {
-        case "A" ->  // Normal task
-                new Task(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
-        case "T" ->  // TodoTask
-                new TodoTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
-        case "D" ->  // Deadline task
-                new DeadlineTask(delimitedStrings[1], // - name
-                        Boolean.parseBoolean(delimitedStrings[2]), // - isDone
-                        LocalDate.parse(delimitedStrings[3])); // - deadline
-
-        case "E" ->  // Event task
-                new EventTask(delimitedStrings[1], // - name
-                        Boolean.parseBoolean(delimitedStrings[2]), // - isDone
-                        LocalDate.parse(delimitedStrings[3]), // - startTime
-                        LocalDate.parse(delimitedStrings[4])); // - endTime
-
+        case "A" -> // Normal task
+            new Task(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
+        case "T" -> // TodoTask
+            new TodoTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
+        case "D" -> // Deadline task
+            new DeadlineTask(delimitedStrings[1], // - name
+                    Boolean.parseBoolean(delimitedStrings[2]), // - isDone
+                    LocalDate.parse(delimitedStrings[3])); // - deadline
+        case "E" -> // Event task
+            new EventTask(delimitedStrings[1], // - name
+                    Boolean.parseBoolean(delimitedStrings[2]), // - isDone
+                    LocalDate.parse(delimitedStrings[3]), // - startTime
+                    LocalDate.parse(delimitedStrings[4])); // - endTime
         default -> null;
         };
     }
@@ -124,7 +122,7 @@ public class Parser {
         try {
             LocalDate.parse(deadlineTaskDetails[1].strip());
         } catch (Exception e) {
-             return "Wrong format! Type 'deadline [name] / [deadline]'";
+            return "Wrong format! Type 'deadline [name] / [deadline]'";
         }
         String deadlineNameToAdd = deadlineTaskDetails[0].strip();
         String deadlineTime = deadlineTaskDetails[1].strip();
@@ -221,7 +219,7 @@ public class Parser {
             return ("I've removed this task: " + deletedTask.toString()
                     + "\nYou have " + tasks.size() + " tasks now.");
         } catch (NumberFormatException e) {
-           return ("Format error! Did you put a single number after 'delete'?");
+            return ("Format error! Did you put a single number after 'delete'?");
         }
     }
 

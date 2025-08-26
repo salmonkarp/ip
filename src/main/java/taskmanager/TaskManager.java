@@ -22,7 +22,7 @@ public class TaskManager {
 
     public String getResponse(String userInput) {
         if (userInput.contains(Parser.SAVE_DELIMITER)) {
-            return("Please don't include the character '" + Parser.SAVE_DELIMITER + "'!");
+            return ("Please don't include the character '" + Parser.SAVE_DELIMITER + "'!");
         }
 
         Parser.TaskCommand userTaskCommand = Parser.TaskCommand.getTaskCommandFromInput(userInput);
@@ -36,7 +36,7 @@ public class TaskManager {
         case ADD_EVENT -> Parser.handleAddEventTask(userInput, tasks);
         case DELETE -> Parser.handleDeleteTask(userInput, tasks);
         case BYE -> {
-            String saveResult = storage.save(tasks, LOCAL_DATA_PATH );
+            String saveResult = storage.save(tasks, LOCAL_DATA_PATH);
             yield (saveResult + "\nBye. Hope to see you again soon!");
         }
         case FIND -> Parser.handleFindTask(userInput, tasks);
