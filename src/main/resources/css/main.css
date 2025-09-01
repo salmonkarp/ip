@@ -1,0 +1,61 @@
+.root {
+    main-color: derive(gray, -50%);
+    -fx-background-color: main-color;
+    -fx-background-image: url("../images/background.jpg");
+    -fx-background-size: 400px 600px;
+    -fx-background-repeat: repeat;
+}
+
+.text-field {
+    -fx-background-color: white;
+    -fx-font: 14px "JetBrains Mono Medium";
+    -fx-background-radius: 0px;
+}
+
+.button {
+    -fx-background-color: derive(blue, 130%);
+    -fx-font: 14px "Jetbrains Mono Medium";
+    -fx-background-radius: 0px;
+}
+
+.button:hover {
+    -fx-background-color: derive(blue, 110%);
+    -fx-font-size: 14px;
+    -fx-cursor: HAND;
+}
+
+.button:pressed {
+    -fx-background-color:gray;
+    -fx-font-size: 20px;
+}
+
+.scroll-pane,
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-font-size: 10px;
+    -fx-background-color: main-color;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: derive(gray, 20%);
+    -fx-background-radius: 1em;
+}
+
+/* Hides the increment and decrement buttons. */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}
+
+.scroll-pane {
+    -fx-background-color: rgba(255,255,255,.3);
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+

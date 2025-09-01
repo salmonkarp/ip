@@ -1,5 +1,6 @@
 package taskmanager;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
@@ -27,8 +28,10 @@ public class MainWindow extends AnchorPane {
 
     private TaskManager taskManager;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
-    private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+    private final Image userImage = new Image(
+            Objects.requireNonNull(this.getClass().getResourceAsStream("/images/userIcon.png")));
+    private final Image botImage = new Image(
+            Objects.requireNonNull(this.getClass().getResourceAsStream("/images/robotIcon.png")));
 
     @FXML
     public void initialize() {
@@ -42,7 +45,7 @@ public class MainWindow extends AnchorPane {
         greetingMessage += taskManager.getResponse("list");
 
         dialogContainer.getChildren().addAll(
-                DialogBox.getDukeDialog(greetingMessage, dukeImage)
+                DialogBox.getDukeDialog(greetingMessage, botImage)
         );
     }
 
@@ -56,7 +59,7 @@ public class MainWindow extends AnchorPane {
         String response = taskManager.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getDukeDialog(response, botImage)
         );
         userInput.clear();
 
