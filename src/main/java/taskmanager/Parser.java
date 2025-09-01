@@ -13,7 +13,7 @@ public class Parser {
      * Helper inner class that defines the limited set of
      * user instructions available.
      */
-    public static enum TaskCommand {
+    public enum TaskCommand {
         ADD,
         LIST,
         MARK_AS_DONE,
@@ -91,7 +91,7 @@ public class Parser {
         String taskNameToAdd = userInput.substring(3).strip();
         Task taskToAdd = new Task(taskNameToAdd);
         tasks.add(taskToAdd);
-        return ("I've added a new task: " + taskToAdd.toString()
+        return ("I've added a new task: " + taskToAdd
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
@@ -106,7 +106,7 @@ public class Parser {
         String todoNameToAdd = userInput.substring(4).strip();
         TodoTask todoTaskToAdd = new TodoTask(todoNameToAdd);
         tasks.add(todoTaskToAdd);
-        return ("I've added a new todo task: " + todoTaskToAdd.toString()
+        return ("I've added a new todo task: " + todoTaskToAdd
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
@@ -131,7 +131,7 @@ public class Parser {
         String deadlineTime = deadlineTaskDetails[1].strip();
         DeadlineTask deadlineTaskToAdd = new DeadlineTask(deadlineNameToAdd, LocalDate.parse(deadlineTime));
         tasks.add(deadlineTaskToAdd);
-        return ("I've added a new deadline task: " + deadlineTaskToAdd.toString()
+        return ("I've added a new deadline task: " + deadlineTaskToAdd
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
@@ -160,7 +160,7 @@ public class Parser {
                 LocalDate.parse(eventStartTime),
                 LocalDate.parse(eventEndTime));
         tasks.add(eventTaskToAdd);
-        return ("I've added a new event task: " + eventTaskToAdd.toString()
+        return ("I've added a new event task: " + eventTaskToAdd
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
@@ -172,7 +172,7 @@ public class Parser {
      */
     public static String handleMarkAsDone(String userInput, TaskList tasks) {
         try {
-            Integer taskIndexToMark = Integer.parseInt(userInput.substring(4).strip()) - 1;
+            int taskIndexToMark = Integer.parseInt(userInput.substring(4).strip()) - 1;
             if (taskIndexToMark < 0 || taskIndexToMark >= tasks.size()) {
                 return ("Index out of range. Are you sure you inputted the right index?");
             } else {
@@ -240,7 +240,7 @@ public class Parser {
         for (int i = 0; i < tasks.size(); i += 1) {
             Task currentTask = tasks.get(i);
             if (currentTask.getName().contains(query)) {
-                result.append(counter + ". " + currentTask.toString() + '\n');
+                result.append(counter).append(". ").append(currentTask).append('\n');
                 counter += 1;
             }
         }

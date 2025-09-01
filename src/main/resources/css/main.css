@@ -1,8 +1,8 @@
 .root {
     main-color: derive(gray, -50%);
     -fx-background-color: main-color;
-    -fx-background-image: url("../images/background.jpg");
-    -fx-background-size: 400px 600px;
+    -fx-background-image: url("../images/background.png");
+    -fx-background-size: 400px 400px;
     -fx-background-repeat: repeat;
 }
 
@@ -13,13 +13,13 @@
 }
 
 .button {
-    -fx-background-color: derive(blue, 130%);
+    -fx-background-color: derive(gray, 80%);
     -fx-font: 14px "Jetbrains Mono Medium";
     -fx-background-radius: 0px;
 }
 
 .button:hover {
-    -fx-background-color: derive(blue, 110%);
+    -fx-background-color: derive(gray, 60%);
     -fx-font-size: 14px;
     -fx-cursor: HAND;
 }
@@ -52,7 +52,7 @@
 }
 
 .scroll-pane {
-    -fx-background-color: rgba(255,255,255,.3);
+    -fx-background-color: rgba(0,0,0,.1);
 }
 
 .scroll-pane .viewport {
