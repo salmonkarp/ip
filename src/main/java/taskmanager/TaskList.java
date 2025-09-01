@@ -1,6 +1,7 @@
 package taskmanager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,6 +20,11 @@ public class TaskList {
 
     public TaskList(int initialCapacity) {
         tasks = new ArrayList<Task>(initialCapacity);
+    }
+
+    public TaskList(Task... inputTasks) {
+        tasks = new ArrayList<Task>(INITIAL_TASK_LIST_CAPACITY);
+        Collections.addAll(tasks, inputTasks);
     }
 
     public String getTasksAsString() {

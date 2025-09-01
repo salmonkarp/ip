@@ -8,8 +8,8 @@ public class TaskManager {
 
     protected static final String LOCAL_DATA_PATH = "./data/tasks.txt";
 
-    private Storage storage = new Storage(LOCAL_DATA_PATH);
-    private TaskList tasks = new TaskList();
+    private final Storage storage = new Storage(LOCAL_DATA_PATH);
+    private final TaskList tasks;
 
     /**
      * Returns a TaskManager object.
