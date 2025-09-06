@@ -5,7 +5,7 @@ package taskmanager;
  * expanded upon by its subclasses.
  */
 public class Task {
-    private String name;
+    private final String name;
     private boolean isDone;
 
     /**
@@ -33,10 +33,6 @@ public class Task {
 
     public String getName() {
         return this.name;
-    };
-
-    public boolean isDone() {
-        return this.isDone;
     }
 
     public void markDone() {
@@ -58,9 +54,9 @@ public class Task {
 
     public String getSaveString() {
         return getSaveCode()
-                + Parser.SAVE_DELIMITER
+                + TaskManager.SAVE_DELIMITER
                 + this.name
-                + Parser.SAVE_DELIMITER
+                + TaskManager.SAVE_DELIMITER
                 + this.isDone;
     }
 

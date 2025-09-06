@@ -1,5 +1,7 @@
 package taskmanager;
 
+import java.time.LocalDate;
+
 /**
  * A general task manager class that contains the overall
  * logic flow to how the program runs.
@@ -7,6 +9,7 @@ package taskmanager;
 public class TaskManager {
 
     protected static final String LOCAL_DATA_PATH = "./data/tasks.txt";
+    protected static final String SAVE_DELIMITER = "`";
 
     private final Storage storage = new Storage(LOCAL_DATA_PATH);
     private final TaskList tasks;
@@ -20,29 +23,42 @@ public class TaskManager {
         System.out.println("TaskManager has been created");
     }
 
-    public String getResponse(String userInput) {
-        if (userInput.contains(Parser.SAVE_DELIMITER)) {
-            return ("Please don't include the character '" + Parser.SAVE_DELIMITER + "'!");
-        }
-
-        Parser.TaskCommand userTaskCommand = Parser.TaskCommand.getTaskCommandFromInput(userInput);
-        return switch (userTaskCommand) {
-        case ADD -> Parser.handleAddNormalTask(userInput, tasks);
-        case LIST -> PrintHelper.getTaskListAsString(tasks);
-        case MARK_AS_DONE -> Parser.handleMarkAsDone(userInput, tasks);
-        case UNMARK_AS_DONE -> Parser.handleMarkAsUndone(userInput, tasks);
-        case ADD_TODO -> Parser.handleAddTodoTask(userInput, tasks);
-        case ADD_DEADLINE -> Parser.handleAddDeadlineTask(userInput, tasks);
-        case ADD_EVENT -> Parser.handleAddEventTask(userInput, tasks);
-        case DELETE -> Parser.handleDeleteTask(userInput, tasks);
-        case SAVE -> storage.save(tasks, LOCAL_DATA_PATH);
-        case BYE -> {
-            String saveResult = storage.save(tasks, LOCAL_DATA_PATH);
-            yield (saveResult + "\nBye. Hope to see you again soon!");
-        }
-        case FIND -> Parser.handleFindTask(userInput, tasks);
-        default -> ("Unknown command. Try again.");
+    public static Task getTaskFromSaveString(String s) {
+        String[] delimitedStrings = s.split(SAVE_DELIMITER);
+        String taskCode = delimitedStrings[0];
+        return switch (taskCode) {
+            case "A" -> // Normal task
+                    new Task(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
+            case "T" -> // TodoTask
+                    new TodoTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
+            case "D" -> // Deadline task
+                    new DeadlineTask(delimitedStrings[1], // - name
+                            Boolean.parseBoolean(delimitedStrings[2]), // - isDone
+                            LocalDate.parse(delimitedStrings[3])); // - deadline
+            case "E" -> // Event task
+                    new EventTask(delimitedStrings[1], // - name
+                            Boolean.parseBoolean(delimitedStrings[2]), // - isDone
+                            LocalDate.parse(delimitedStrings[3]), // - startTime
+                            LocalDate.parse(delimitedStrings[4])); // - endTime
+            default -> null;
         };
+    }
+
+    public String getResponse(String userInput) {
+        if (userInput.contains(SAVE_DELIMITER)) {
+            return ("Please don't include the character '" + SAVE_DELIMITER + "'!");
+        }
+        for (Command.Factory factory : Command.commandFactories) {
+            if (userInput.startsWith(factory.getPrefix())) {
+                try {
+                    Command command = factory.createFromUserInput(userInput, tasks, storage);
+                    return command.execute();
+                } catch (Exception e) {
+                    return "Error! " + e.getMessage();
+                }
+            }
+        }
+        return "No matching command found. Try again?";
     }
 
 }

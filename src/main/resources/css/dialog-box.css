@@ -1,21 +1,22 @@
 .label {
-    -fx-background-color: derive(gray, 50%);
-    -fx-border-color: transparent;
+    -fx-background-color: black;
+    -fx-border-color: derive(gray, 50%);
     -fx-border-width: 2px;
     -fx-background-radius: 1em 1em 0 1em;
     -fx-border-radius: 1em 1em 0 1em;
     -fx-padding: 6px;
     -fx-border-insets: 0px 7px 0px 7px;
     -fx-background-insets: 0px 7px 0px 7px;
-    -fx-text-fill: derive(black, 40%);
+    -fx-text-fill: derive(gray, 50%);
     -fx-font-weight: 400;
     -fx-font-family: "JetBrains Mono Medium";
 
 }
 
 .reply-label {
-    -fx-background-radius: 1em 1em 1em 0;
-    -fx-border-radius: 1em 1em 1em 0;
+    -fx-background-radius: 1em 1em 1em 0em;
+    -fx-border-radius: 1em 1em 1em 0em;
+    -fx-border-color: derive(gray, 50%);
 }
 
 #displayPicture {
@@ -28,9 +29,4 @@
 
     /* Rotate image clockwise by degrees. */
     -fx-rotate: 0;
-}
-
-.reply-label {
-    -fx-background-radius: 1em 1em 1em 0;
-    -fx-border-radius: 1em 1em 1em 0;
 }

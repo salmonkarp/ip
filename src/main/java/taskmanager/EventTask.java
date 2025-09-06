@@ -7,8 +7,8 @@ import java.time.format.DateTimeFormatter;
  * A type of task that has both a starting and ending time.
  */
 public class EventTask extends Task {
-    private LocalDate startTime;
-    private LocalDate endTime;
+    private final LocalDate startTime;
+    private final LocalDate endTime;
 
     /**
      * Constructor to create an EventTask
@@ -53,9 +53,9 @@ public class EventTask extends Task {
     @Override
     public String getSaveString() {
         return super.getSaveString()
-                + Parser.SAVE_DELIMITER
+                + TaskManager.SAVE_DELIMITER
                 + this.startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                + Parser.SAVE_DELIMITER
+                + TaskManager.SAVE_DELIMITER
                 + this.endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

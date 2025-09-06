@@ -11,7 +11,8 @@ import java.util.Scanner;
  */
 public class Storage {
 
-    private TaskList loadedTasks = new TaskList();
+    private final TaskList loadedTasks;
+    private final String filePath;
 
     /**
      * Helper class to allow for future instantiation.
@@ -22,20 +23,22 @@ public class Storage {
      */
     public Storage(String filePath) {
         loadedTasks = new TaskList();
+        this.filePath = filePath;
         try {
             File saveFile = new File(filePath);
             File parentDir = saveFile.getParentFile();
             if (parentDir != null && !parentDir.exists()) {
                 boolean isSuccessful = parentDir.mkdirs();
+                System.out.println("Create new directories: " + (isSuccessful ? "not" : "") + "successful");
             }
             if (!saveFile.exists()) {
                 boolean isSuccessful = saveFile.createNewFile();
-                System.out.println("No save file found. Created a new one at " + filePath);
+                System.out.println("Create new save file: " + (isSuccessful ? "not" : "") + "successful");
             }
             Scanner scanner = new Scanner(saveFile);
             while (scanner.hasNextLine()) {
                 String rawString = scanner.nextLine();
-                Task task = Parser.getTaskFromSaveString(rawString);
+                Task task = TaskManager.getTaskFromSaveString(rawString);
                 if (task == null) {
                     continue;
                 }
@@ -45,7 +48,6 @@ public class Storage {
             PrintHelper.getTaskListAsString(loadedTasks);
         } catch (Exception e) {
             System.out.println("Failed to obtain data in " + filePath);
-            e.printStackTrace();
         }
     }
 
@@ -56,9 +58,8 @@ public class Storage {
     /**
      * Saves tasks onto a local file in the user's device.
      * @param tasks List of tasks obtain from main TaskManager process.
-     * @param filePath Path of where data should be stored.
      */
-    public String save(TaskList tasks, String filePath) {
+    public String save(TaskList tasks) {
         String stringifiedTasks = tasks.getTasksAsString();
         try {
             FileWriter fileWriter = new FileWriter(filePath);

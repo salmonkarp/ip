@@ -47,7 +47,7 @@ public class DeadlineTask extends Task {
     @Override
     public String getSaveString() {
         return super.getSaveString()
-                + Parser.SAVE_DELIMITER
+                + TaskManager.SAVE_DELIMITER
                 + this.deadline.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }
