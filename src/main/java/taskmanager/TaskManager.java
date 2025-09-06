@@ -27,20 +27,20 @@ public class TaskManager {
         String[] delimitedStrings = s.split(SAVE_DELIMITER);
         String taskCode = delimitedStrings[0];
         return switch (taskCode) {
-            case "A" -> // Normal task
-                    new Task(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
-            case "T" -> // TodoTask
-                    new TodoTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
-            case "D" -> // Deadline task
-                    new DeadlineTask(delimitedStrings[1], // - name
-                            Boolean.parseBoolean(delimitedStrings[2]), // - isDone
-                            LocalDate.parse(delimitedStrings[3])); // - deadline
-            case "E" -> // Event task
-                    new EventTask(delimitedStrings[1], // - name
-                            Boolean.parseBoolean(delimitedStrings[2]), // - isDone
-                            LocalDate.parse(delimitedStrings[3]), // - startTime
-                            LocalDate.parse(delimitedStrings[4])); // - endTime
-            default -> null;
+        case "A" -> // Normal task
+            new Task(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
+        case "T" -> // TodoTask
+            new TodoTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
+        case "D" -> // Deadline task
+            new DeadlineTask(delimitedStrings[1], // - name
+                    Boolean.parseBoolean(delimitedStrings[2]), // - isDone
+                    LocalDate.parse(delimitedStrings[3])); // - deadline
+        case "E" -> // Event task
+            new EventTask(delimitedStrings[1], // - name
+                    Boolean.parseBoolean(delimitedStrings[2]), // - isDone
+                    LocalDate.parse(delimitedStrings[3]), // - startTime
+                    LocalDate.parse(delimitedStrings[4])); // - endTime
+        default -> null;
         };
     }
 
@@ -48,7 +48,7 @@ public class TaskManager {
         if (userInput.contains(SAVE_DELIMITER)) {
             return ("Please don't include the character '" + SAVE_DELIMITER + "'!");
         }
-        for (Command.Factory factory : Command.commandFactories) {
+        for (Command.Factory factory : Command.COMMAND_FACTORIES) {
             if (userInput.startsWith(factory.getPrefix())) {
                 try {
                     Command command = factory.createFromUserInput(userInput, tasks, storage);

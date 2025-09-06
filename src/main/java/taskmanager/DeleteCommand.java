@@ -1,11 +1,14 @@
 package taskmanager;
 
-public class DeleteCommand extends Command{
+/**
+ * Command to delete a certain task using a specified index
+ */
+public class DeleteCommand extends Command {
 
     private final int indexToDelete;
     private final TaskList tasks;
 
-    public DeleteCommand(int indexToDelete, TaskList tasks) {
+    private DeleteCommand(int indexToDelete, TaskList tasks) {
         this.indexToDelete = indexToDelete;
         this.tasks = tasks;
     }
@@ -17,9 +20,9 @@ public class DeleteCommand extends Command{
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    public static class Factory implements Command.Factory {
+    protected static class Factory implements Command.Factory {
 
-        private final String PREFIX = "delete";
+        private static final String PREFIX = "delete";
 
         @Override
         public String getPrefix() {

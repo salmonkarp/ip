@@ -2,13 +2,23 @@ package taskmanager;
 
 import java.time.LocalDate;
 
-public class EventCommand extends Command{
+/**
+ * Command to create an event task.
+ */
+public class EventCommand extends Command {
 
     private final String description;
     private final LocalDate startTime;
     private final LocalDate endTime;
     private final TaskList tasks;
 
+    /**
+     * Constructor to create a command whose job is to create an event task.
+     * @param description Description of the task / event
+     * @param startTime Starting time of the event
+     * @param endTime Ending time of the event
+     * @param tasks List of tasks for the task to be added to
+     */
     public EventCommand(String description, LocalDate startTime, LocalDate endTime, TaskList tasks) {
         this.description = description;
         this.startTime = startTime;
@@ -27,9 +37,9 @@ public class EventCommand extends Command{
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    public static class Factory implements Command.Factory{
+    protected static class Factory implements Command.Factory {
 
-        public static String PREFIX = "event";
+        private static final String PREFIX = "event";
 
         @Override
         public String getPrefix() {

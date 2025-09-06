@@ -1,4 +1,4 @@
-package taskmanager;
+package ui;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import taskmanager.TaskManager;
 
 
 /**

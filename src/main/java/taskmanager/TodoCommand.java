@@ -1,6 +1,9 @@
 package taskmanager;
 
-public class TodoCommand extends Command{
+/**
+ * Command to create a todo task
+ */
+public class TodoCommand extends Command {
 
     private final String description;
     private final TaskList tasks;
@@ -18,7 +21,7 @@ public class TodoCommand extends Command{
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    public static class Factory implements Command.Factory{
+    protected static class Factory implements Command.Factory {
 
         private static final String PREFIX = "todo";
 

@@ -2,13 +2,16 @@ package taskmanager;
 
 import java.time.LocalDate;
 
-public class DeadlineCommand extends Command{
+/**
+ * Command to create a deadline task
+ */
+public class DeadlineCommand extends Command {
 
     private final String description;
     private final LocalDate time;
     private final TaskList tasks;
 
-    public DeadlineCommand(String description, LocalDate time, TaskList tasks) {
+    private DeadlineCommand(String description, LocalDate time, TaskList tasks) {
         this.description = description;
         this.time = time;
         this.tasks = tasks;
@@ -21,7 +24,7 @@ public class DeadlineCommand extends Command{
                 + "\nYou have " + tasks.size() + " tasks now.");
     }
 
-    public static class Factory implements Command.Factory{
+    protected static class Factory implements Command.Factory {
 
         private static final String PREFIX = "deadline";
 

@@ -1,6 +1,9 @@
 package taskmanager;
 
-public class ListCommand extends Command{
+/**
+ * Command to list out all tasks
+ */
+public class ListCommand extends Command {
 
     private final TaskList tasks;
 
@@ -13,7 +16,7 @@ public class ListCommand extends Command{
         return PrintHelper.getTaskListAsString(tasks);
     }
 
-    public static class Factory implements Command.Factory{
+    protected static class Factory implements Command.Factory {
 
         private static final String PREFIX = "list";
 

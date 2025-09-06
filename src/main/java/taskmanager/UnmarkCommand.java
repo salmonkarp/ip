@@ -1,6 +1,9 @@
 package taskmanager;
 
-public class UnmarkCommand extends Command{
+/**
+ * Command to mark a task as undone
+ */
+public class UnmarkCommand extends Command {
     private final int indexToMark;
     private final TaskList tasks;
 
@@ -15,9 +18,9 @@ public class UnmarkCommand extends Command{
         return ("Nice! I've marked this task as not done:\n" + tasks.get(indexToMark));
     }
 
-    public static class Factory implements Command.Factory {
+    protected static class Factory implements Command.Factory {
 
-        private final String PREFIX = "unmark";
+        private static final String PREFIX = "unmark";
 
         @Override
         public String getPrefix() {

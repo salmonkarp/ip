@@ -1,12 +1,14 @@
 package taskmanager;
 
-public class FindCommand extends Command{
+/**
+ * Command to find tasks that match a certain query
+ */
+public class FindCommand extends Command {
 
     private final String query;
     private final TaskList tasks;
 
-    public FindCommand(String query, TaskList tasks) {
-
+    private FindCommand(String query, TaskList tasks) {
         this.query = query;
         this.tasks = tasks;
     }
@@ -22,15 +24,15 @@ public class FindCommand extends Command{
                 counter += 1;
             }
         }
-        if (result.isEmpty()){
+        if (result.isEmpty()) {
             return "No such task found!";
         }
         return (result.toString());
     }
 
-    public static class Factory implements Command.Factory {
+    protected static class Factory implements Command.Factory {
 
-        private final String PREFIX = "find";
+        private static final String PREFIX = "find";
 
         @Override
         public String getPrefix() {

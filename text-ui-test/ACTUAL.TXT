@@ -1,0 +1,267 @@
+____________________________________________________________
+Hello! I'm TaskManager.
+What can I do for you?
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+I've added a new task: [ ] task1
+You have 1 tasks now.
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+I've added a new task: [ ] task2
+You have 2 tasks now.
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+I've added a new task: [ ] task3
+You have 3 tasks now.
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Nice! I've marked this task as done:
+[X] task2
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Nice! I've marked this task as done:
+[X] task3
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Nice! I've unmarked this task as done:
+[ ] task1
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Nice! I've unmarked this task as done:
+[ ] task2
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Here are the tasks in your list!
+1. [ ] task1
+2. [ ] task2
+3. [X] task3
+
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+I've added a new todo task: [T][ ] task4 randomfodder
+You have 4 tasks now.
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+I've added a new todo task: [T][ ] task5
+You have 5 tasks now.
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Here are the tasks in your list!
+1. [ ] task1
+2. [ ] task2
+3. [X] task3
+4. [T][ ] task4 randomfodder
+5. [T][ ] task5
+
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Nice! I've marked this task as done:
+[T][X] task5
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Here are the tasks in your list!
+1. [ ] task1
+2. [ ] task2
+3. [X] task3
+4. [T][ ] task4 randomfodder
+5. [T][X] task5
+
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+I've added a new deadline task: [D][ ] task6 (by: saturday)
+You have 6 tasks now.
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Wrong format! Type 'deadline [name] / [deadline]'
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Wrong format! Type 'deadline [name] / [deadline]'
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Wrong format! Type 'deadline [name] / [deadline]'
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Nice! I've marked this task as done:
+[D][X] task6 (by: saturday)
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Here are the tasks in your list!
+1. [ ] task1
+2. [ ] task2
+3. [X] task3
+4. [T][ ] task4 randomfodder
+5. [T][X] task5
+6. [D][X] task6 (by: saturday)
+
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Nice! I've unmarked this task as done:
+[D][ ] task6 (by: saturday)
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Here are the tasks in your list!
+1. [ ] task1
+2. [ ] task2
+3. [X] task3
+4. [T][ ] task4 randomfodder
+5. [T][X] task5
+6. [D][ ] task6 (by: saturday)
+
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+I've added a new event task: [E][ ] task7 (from: now to: later)
+You have 7 tasks now.
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+I've added a new event task: [E][ ] task8 (from: sat to: sun)
+You have 8 tasks now.
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Wrong format! Type 'event [name] / [startTime] / [endTime]'
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Wrong format! Type 'event [name] / [startTime] / [endTime]'
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Wrong format! Type 'event [name] / [startTime] / [endTime]'
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Nice! I've marked this task as done:
+[E][X] task8 (from: sat to: sun)
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Here are the tasks in your list!
+1. [ ] task1
+2. [ ] task2
+3. [X] task3
+4. [T][ ] task4 randomfodder
+5. [T][X] task5
+6. [D][ ] task6 (by: saturday)
+7. [E][ ] task7 (from: now to: later)
+8. [E][X] task8 (from: sat to: sun)
+
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+I've removed this task: [E][X] task8 (from: sat to: sun)
+You have 7 tasks now.
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+I've removed this task: [ ] task1
+You have 6 tasks now.
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+I've removed this task: [T][ ] task4 randomfodder
+You have 5 tasks now.
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Here are the tasks in your list!
+1. [ ] task2
+2. [X] task3
+3. [T][X] task5
+4. [D][ ] task6 (by: saturday)
+5. [E][ ] task7 (from: now to: later)
+
+____________________________________________________________
+
+
+Insert your input here: 
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+

@@ -1,4 +1,4 @@
-package taskmanager;
+package ui;
 
 import java.io.IOException;
 
@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import taskmanager.TaskManager;
 
 /**
  * Main class used for JavaFX Application, acting
@@ -16,7 +17,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private TaskManager taskManager = new TaskManager();
+    private final TaskManager taskManager = new TaskManager();
 
     @Override
     public void start(Stage stage) {

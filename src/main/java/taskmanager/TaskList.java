@@ -15,15 +15,19 @@ public class TaskList {
     private final List<Task> tasks;
 
     public TaskList() {
-        tasks = new ArrayList<Task>(INITIAL_TASK_LIST_CAPACITY);
+        tasks = new ArrayList<>(INITIAL_TASK_LIST_CAPACITY);
     }
 
     public TaskList(int initialCapacity) {
-        tasks = new ArrayList<Task>(initialCapacity);
+        tasks = new ArrayList<>(initialCapacity);
     }
 
+    /**
+     * Constructor for a list of tasks
+     * @param inputTasks variable number of tasks to be inserted
+     */
     public TaskList(Task... inputTasks) {
-        tasks = new ArrayList<Task>(INITIAL_TASK_LIST_CAPACITY);
+        tasks = new ArrayList<>(INITIAL_TASK_LIST_CAPACITY);
         Collections.addAll(tasks, inputTasks);
     }
 

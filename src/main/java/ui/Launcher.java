@@ -1,4 +1,4 @@
-package taskmanager;
+package ui;
 
 import javafx.application.Application;
 

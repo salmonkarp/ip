@@ -1,11 +1,14 @@
 package taskmanager;
 
-public class ByeCommand extends Command{
+/**
+ * Command to save and exit the program.
+ */
+public class ByeCommand extends Command {
 
     private final Storage storage;
     private final TaskList tasks;
 
-    public ByeCommand(Storage storage, TaskList tasks) {
+    private ByeCommand(Storage storage, TaskList tasks) {
         this.storage = storage;
         this.tasks = tasks;
     }
@@ -16,7 +19,7 @@ public class ByeCommand extends Command{
         return (saveResult + "\nBye. Hope to see you again soon!");
     }
 
-    public static class Factory implements Command.Factory {
+    protected static class Factory implements Command.Factory {
 
         @Override
         public String getPrefix() {

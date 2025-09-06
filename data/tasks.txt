@@ -1,5 +1,6 @@
 E`thing`true`2022-10-12`2024-10-11
-E`stuff`false`2022-01-10`2024-10-11
-T`thinger`false
-T`thing`false
+E`stuff`true`2022-01-10`2024-10-11
+T`thinger`true
 T`boss`false
+T`stuff1234`true
+E`thing`false`2024-10-20`2025-10-01

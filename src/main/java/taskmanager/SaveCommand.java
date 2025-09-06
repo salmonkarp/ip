@@ -1,11 +1,14 @@
 package taskmanager;
 
-public class SaveCommand extends Command{
+/**
+ * Command to save tasks to a local file
+ */
+public class SaveCommand extends Command {
 
     private final Storage storage;
     private final TaskList tasks;
 
-    public SaveCommand(Storage storage, TaskList tasks) {
+    private SaveCommand(Storage storage, TaskList tasks) {
         this.storage = storage;
         this.tasks = tasks;
     }
@@ -15,7 +18,7 @@ public class SaveCommand extends Command{
         return storage.save(tasks);
     }
 
-    public static class Factory implements Command.Factory {
+    protected static class Factory implements Command.Factory {
 
         @Override
         public String getPrefix() {

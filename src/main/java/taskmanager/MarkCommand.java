@@ -1,6 +1,9 @@
 package taskmanager;
 
-public class MarkCommand extends Command{
+/**
+ * Command to mark a certain task as done
+ */
+public class MarkCommand extends Command {
 
     private final int indexToMark;
     private final TaskList tasks;
@@ -16,9 +19,9 @@ public class MarkCommand extends Command{
         return ("Nice! I've marked this task as done:\n" + tasks.get(indexToMark));
     }
 
-    public static class Factory implements Command.Factory {
+    protected static class Factory implements Command.Factory {
 
-        private final String PREFIX = "mark";
+        private static final String PREFIX = "mark";
 
         @Override
         public String getPrefix() {
