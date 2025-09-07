@@ -8,6 +8,7 @@ public class ListCommand extends Command {
     private final TaskList tasks;
 
     private ListCommand(TaskList tasks) {
+        assert tasks != null;
         this.tasks = tasks;
     }
 

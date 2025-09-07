@@ -24,6 +24,7 @@ public class Storage {
     public Storage(String filePath) {
         loadedTasks = new TaskList();
         this.filePath = filePath;
+        assert !filePath.isEmpty() && !filePath.startsWith("C:");
         try {
             File saveFile = new File(filePath);
             File parentDir = saveFile.getParentFile();
@@ -60,6 +61,7 @@ public class Storage {
      * @param tasks List of tasks obtain from main TaskManager process.
      */
     public String save(TaskList tasks) {
+        assert tasks != null;
         String stringifiedTasks = tasks.getTasksAsString();
         try {
             FileWriter fileWriter = new FileWriter(filePath);

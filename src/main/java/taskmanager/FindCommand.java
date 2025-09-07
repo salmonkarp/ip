@@ -9,6 +9,7 @@ public class FindCommand extends Command {
     private final TaskList tasks;
 
     private FindCommand(String query, TaskList tasks) {
+        assert !query.isEmpty() && tasks != null;
         this.query = query;
         this.tasks = tasks;
     }

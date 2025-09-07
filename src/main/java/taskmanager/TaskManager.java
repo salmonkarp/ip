@@ -20,6 +20,7 @@ public class TaskManager {
      */
     public TaskManager() {
         tasks = storage.load();
+        assert tasks != null;
         System.out.println("TaskManager has been created");
     }
 
@@ -45,6 +46,7 @@ public class TaskManager {
     }
 
     public String getResponse(String userInput) {
+        assert !userInput.isEmpty();
         if (userInput.contains(SAVE_DELIMITER)) {
             return ("Please don't include the character '" + SAVE_DELIMITER + "'!");
         }

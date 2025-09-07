@@ -9,6 +9,7 @@ public class DeleteCommand extends Command {
     private final TaskList tasks;
 
     private DeleteCommand(int indexToDelete, TaskList tasks) {
+        assert indexToDelete >= 0 && tasks != null && indexToDelete < tasks.size();
         this.indexToDelete = indexToDelete;
         this.tasks = tasks;
     }

@@ -9,6 +9,7 @@ public class MarkCommand extends Command {
     private final TaskList tasks;
 
     private MarkCommand(int indexToMark, TaskList tasks) {
+        assert tasks != null && indexToMark >= 0 && indexToMark < tasks.size();
         this.indexToMark = indexToMark;
         this.tasks = tasks;
     }
