@@ -13,7 +13,6 @@ import taskmanager.TaskManager;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-
 /**
  * Controller for the main GUI.
  */
