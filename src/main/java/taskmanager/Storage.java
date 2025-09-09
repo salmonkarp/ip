@@ -22,7 +22,7 @@ public class Storage {
      * @param filePath Path of where data is stored in user's device.
      */
     public Storage(String filePath) {
-        loadedTasks = new TaskList();
+        this.loadedTasks = new TaskList();
         this.filePath = filePath;
     }
 
@@ -32,6 +32,7 @@ public class Storage {
      * @return List of tasks obtained from local file
      */
     public TaskList load() {
+        assert !filePath.isEmpty() && !filePath.startsWith("C:");
         try {
             File saveFile = new File(filePath);
             File parentDir = saveFile.getParentFile();
@@ -65,6 +66,7 @@ public class Storage {
      */
     public String save(TaskList tasks) {
         loadedTasks = tasks;
+        assert tasks != null;
         String stringifiedTasks = tasks.getTasksAsString();
         try {
             FileWriter fileWriter = new FileWriter(filePath);

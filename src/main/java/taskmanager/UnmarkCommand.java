@@ -8,6 +8,7 @@ public class UnmarkCommand extends Command {
     private final TaskList tasks;
 
     private UnmarkCommand(int indexToMark, TaskList tasks) {
+        assert indexToMark >= 0 && tasks != null && indexToMark < tasks.size();
         this.indexToMark = indexToMark;
         this.tasks = tasks;
     }

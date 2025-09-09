@@ -20,6 +20,7 @@ public class EventCommand extends Command {
      * @param tasks List of tasks for the task to be added to
      */
     public EventCommand(String description, LocalDate startTime, LocalDate endTime, TaskList tasks) {
+        assert !description.isEmpty() && startTime != null && endTime != null && tasks != null;
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;

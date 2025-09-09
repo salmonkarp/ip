@@ -30,6 +30,7 @@ public class DeadlineTask extends Task {
      */
     public DeadlineTask(String name, boolean isDone, LocalDate deadline) {
         super(name, isDone);
+        assert !name.isEmpty() && deadline != null;
         this.deadline = deadline;
     }
 
