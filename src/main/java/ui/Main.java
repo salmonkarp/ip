@@ -1,7 +1,5 @@
 package ui;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,6 +8,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import taskmanager.TaskManager;
+
+import java.io.IOException;
+import java.util.Objects;
 
 /**
  * Main class used for JavaFX Application, acting
@@ -24,17 +25,20 @@ public class Main extends Application {
         try {
             stage.setMinHeight(220);
             stage.setMinWidth(417);
-            stage.getIcons().add(new Image(this.getClass().getResourceAsStream("/images/robotIcon.png")));
+            stage.getIcons().add(new Image(Objects.requireNonNull(
+                    this.getClass().getResourceAsStream("/images/robotIcon.png"))));
             stage.setTitle("TaskManager");
-            Font.loadFont(Main.class.getResource("/fonts/JetBrainsMono.ttf").toExternalForm(), 14);
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+            Font.loadFont(Objects.requireNonNull(
+                    Main.class.getResource("/fonts/JetBrainsMono.ttf")).toExternalForm(), 14);
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setTaskManager(taskManager);
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error loading FXML");
         }
     }
 }
