@@ -12,7 +12,6 @@ import taskmanager.TaskManager;
 import java.io.IOException;
 import java.util.Objects;
 
-
 /**
  * Main class used for JavaFX Application, acting
  * as the root for the Stage

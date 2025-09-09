@@ -1,10 +1,10 @@
 package taskmanager;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TaskListTest {
 
@@ -36,7 +36,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void MarkTest() {
+    public void markTest() {
         TaskList taskList = new TaskList(
                 new Task("test1"),
                 new TodoTask("test2"),
