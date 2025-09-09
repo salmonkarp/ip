@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class Storage {
 
-    private final TaskList loadedTasks;
+    private TaskList loadedTasks;
     private final String filePath;
 
     /**
@@ -24,6 +24,9 @@ public class Storage {
     public Storage(String filePath) {
         loadedTasks = new TaskList();
         this.filePath = filePath;
+    }
+
+    public TaskList load() {
         try {
             File saveFile = new File(filePath);
             File parentDir = saveFile.getParentFile();
@@ -49,9 +52,6 @@ public class Storage {
         } catch (Exception e) {
             System.out.println("Failed to obtain data in " + filePath);
         }
-    }
-
-    public TaskList load() {
         return loadedTasks;
     }
 
@@ -60,6 +60,7 @@ public class Storage {
      * @param tasks List of tasks obtain from main TaskManager process.
      */
     public String save(TaskList tasks) {
+        loadedTasks = tasks;
         String stringifiedTasks = tasks.getTasksAsString();
         try {
             FileWriter fileWriter = new FileWriter(filePath);
