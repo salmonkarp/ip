@@ -1,7 +1,9 @@
 package taskmanager;
 
-import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 
 public class TaskListTest {
