@@ -3,6 +3,7 @@ package taskmanager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
@@ -19,10 +20,11 @@ public class EventTaskTest {
 
     @Test
     public void saveStringTest() {
-        EventTask task = new EventTask("task", LocalDate.parse("1992-10-22"),
+        LocalDateTime now = LocalDateTime.now();
+        EventTask task = new EventTask("task", false, now, LocalDate.parse("1992-10-22"),
                 LocalDate.parse("1995-10-31"));
-        assertEquals("E`task`false`1992-10-22`1995-10-31", task.getSaveString());
+        assertEquals("E`task`false`" + now + "`1992-10-22`1995-10-31", task.getSaveString());
         task.markDone();
-        assertEquals("E`task`true`1992-10-22`1995-10-31", task.getSaveString());
+        assertEquals("E`task`true`" + now + "`1992-10-22`1995-10-31", task.getSaveString());
     }
 }

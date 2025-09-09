@@ -1,6 +1,7 @@
 package taskmanager;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -32,6 +33,25 @@ public class DeadlineTask extends Task {
         super(name, isDone);
         assert !name.isEmpty() && deadline != null;
         this.deadline = deadline;
+    }
+
+    /**
+     * Constructor for a DeadlineTask object, which is just a task
+     * with a deadline. Specifies whether the task has been done or not,
+     * as well as the creation time.
+     * @param name The task name / description.
+     * @param isDone Whether the task has been done or not.
+     * @param deadline A date in the form of LocalDate object.
+     * @param timeCreated Time task was created.
+     */
+    public DeadlineTask(String name, boolean isDone, LocalDateTime timeCreated, LocalDate deadline) {
+        super(name, isDone, timeCreated);
+        assert !name.isEmpty() && deadline != null;
+        this.deadline = deadline;
+    }
+
+    protected LocalDate getDeadline() {
+        return this.deadline;
     }
 
     @Override

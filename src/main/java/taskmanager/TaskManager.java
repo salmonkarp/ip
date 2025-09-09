@@ -1,6 +1,7 @@
 package taskmanager;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * A general task manager class that contains the overall
@@ -29,16 +30,22 @@ public class TaskManager {
         String taskCode = delimitedStrings[0];
         return switch (taskCode) {
         case "A" -> // Normal task
-            new Task(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
+            new Task(delimitedStrings[1],
+                    Boolean.parseBoolean(delimitedStrings[2]),
+                    LocalDateTime.parse(delimitedStrings[3]));
         case "T" -> // TodoTask
-            new TodoTask(delimitedStrings[1], Boolean.parseBoolean(delimitedStrings[2]));
+            new TodoTask(delimitedStrings[1],
+                    Boolean.parseBoolean(delimitedStrings[2]),
+                    LocalDateTime.parse(delimitedStrings[3]));
         case "D" -> // Deadline task
             new DeadlineTask(delimitedStrings[1], // - name
                     Boolean.parseBoolean(delimitedStrings[2]), // - isDone
-                    LocalDate.parse(delimitedStrings[3])); // - deadline
+                    LocalDateTime.parse(delimitedStrings[3]),
+                    LocalDate.parse(delimitedStrings[4])); // - deadline
         case "E" -> // Event task
             new EventTask(delimitedStrings[1], // - name
                     Boolean.parseBoolean(delimitedStrings[2]), // - isDone
+                    LocalDateTime.parse(delimitedStrings[3]),
                     LocalDate.parse(delimitedStrings[3]), // - startTime
                     LocalDate.parse(delimitedStrings[4])); // - endTime
         default -> null;

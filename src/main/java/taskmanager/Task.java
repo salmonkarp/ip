@@ -1,12 +1,15 @@
 package taskmanager;
 
+import java.time.LocalDateTime;
+
 /**
  * General task class that can be further
  * expanded upon by its subclasses.
  */
-public class Task {
+public class Task implements Comparable<Task> {
     private final String name;
     private boolean isDone;
+    private final LocalDateTime timeCreated;
 
     /**
      * Constructor only using the task name/description.
@@ -17,6 +20,7 @@ public class Task {
     public Task(String name) {
         this.name = name;
         this.isDone = false;
+        this.timeCreated = LocalDateTime.now();
     }
 
     /**
@@ -29,10 +33,25 @@ public class Task {
     protected Task(String name, boolean isDone) {
         this.name = name;
         this.isDone = isDone;
+        this.timeCreated = LocalDateTime.now();
+    }
+
+    protected Task(String name, boolean isDone, LocalDateTime timeCreated) {
+        this.name = name;
+        this.isDone = isDone;
+        this.timeCreated = timeCreated;
     }
 
     public String getName() {
         return this.name;
+    }
+
+    public LocalDateTime getTimeCreated() {
+        return this.timeCreated;
+    }
+
+    public boolean isDone() {
+        return this.isDone;
     }
 
     public void markDone() {
@@ -57,7 +76,14 @@ public class Task {
                 + TaskManager.SAVE_DELIMITER
                 + this.name
                 + TaskManager.SAVE_DELIMITER
-                + this.isDone;
+                + this.isDone
+                + TaskManager.SAVE_DELIMITER
+                + this.timeCreated;
     }
 
+    @Override
+    public int compareTo(Task o) {
+        // Default comparison is based on name
+        return this.name.compareTo(o.name);
+    }
 }

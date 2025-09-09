@@ -1,6 +1,7 @@
 package taskmanager;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -35,6 +36,25 @@ public class EventTask extends Task {
         super(name, isDone);
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    /**
+     * Constructor to create an EventTask, specifying whether the task
+     * has been done or not, as well as creation time of the task.
+     * @param name Name/description of task.
+     * @param isDone Whether the task has been done or not.
+     * @param startTime When the event starts, in the form of a LocalDate object.
+     * @param endTime When the event ends, in the form of a LocalDate object.
+     * @param timeCreated When the task was created
+     */
+    public EventTask(String name, boolean isDone, LocalDateTime timeCreated, LocalDate startTime, LocalDate endTime) {
+        super(name, isDone, timeCreated);
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    protected LocalDate getStartTime() {
+        return this.startTime;
     }
 
     @Override
