@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class Storage {
 
-    private final TaskList loadedTasks;
+    private TaskList loadedTasks;
     private final String filePath;
 
     /**
@@ -22,8 +22,16 @@ public class Storage {
      * @param filePath Path of where data is stored in user's device.
      */
     public Storage(String filePath) {
-        loadedTasks = new TaskList();
+        this.loadedTasks = new TaskList();
         this.filePath = filePath;
+    }
+
+    /**
+     * Loads stored local file and deserializes the tasks
+     * stored in it.
+     * @return List of tasks obtained from local file
+     */
+    public TaskList load() {
         assert !filePath.isEmpty() && !filePath.startsWith("C:");
         try {
             File saveFile = new File(filePath);
@@ -46,13 +54,9 @@ public class Storage {
                 loadedTasks.add(task);
             }
             scanner.close();
-            PrintHelper.getTaskListAsString(loadedTasks);
         } catch (Exception e) {
             System.out.println("Failed to obtain data in " + filePath);
         }
-    }
-
-    public TaskList load() {
         return loadedTasks;
     }
 
@@ -61,6 +65,7 @@ public class Storage {
      * @param tasks List of tasks obtain from main TaskManager process.
      */
     public String save(TaskList tasks) {
+        loadedTasks = tasks;
         assert tasks != null;
         String stringifiedTasks = tasks.getTasksAsString();
         try {

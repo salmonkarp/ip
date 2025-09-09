@@ -1,8 +1,5 @@
 package ui;
 
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -12,6 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import taskmanager.TaskManager;
+
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -55,7 +55,7 @@ public class MainWindow extends AnchorPane {
      * the dialog container. Clears the user input after processing.
      */
     @FXML
-    private void handleUserInput() throws InterruptedException {
+    private void handleUserInput() {
         String input = userInput.getText();
         String response = taskManager.getResponse(input);
         dialogContainer.getChildren().addAll(
@@ -69,7 +69,7 @@ public class MainWindow extends AnchorPane {
         }
     }
 
-    private void triggerExit() throws InterruptedException {
+    private void triggerExit() {
         new Thread(() -> {
             try {
                 TimeUnit.SECONDS.sleep(1);

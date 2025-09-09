@@ -14,7 +14,11 @@ public class ListCommand extends Command {
 
     @Override
     public String execute() {
-        return PrintHelper.getTaskListAsString(tasks);
+        StringBuilder resultMessage = new StringBuilder("Here are the tasks in your list!\n");
+        for (int i = 0; i < tasks.size(); i += 1) {
+            resultMessage.append((i + 1)).append(". ").append(tasks.get(i).toString()).append("\n");
+        }
+        return (resultMessage.toString());
     }
 
     protected static class Factory implements Command.Factory {
