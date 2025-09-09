@@ -4,7 +4,9 @@ import java.util.List;
 
 /**
  * General command class that needs to be performed
- * when user has inputted a correct input
+ * when user has inputted a correct input. Each subclass
+ * of Command thus only stores the objects it requires to
+ * execute the command.
  */
 public abstract class Command {
 
@@ -32,7 +34,10 @@ public abstract class Command {
     /**
      * Factory class inside each Command
      * whose job is to create the command based on
-     * raw user input.
+     * raw user input. This mainly exists to manage
+     * the different argument lengths of different commands,
+     * such that each command object truly only needs the
+     * objects it requires to execute.
      */
     public interface Factory {
         String getPrefix();

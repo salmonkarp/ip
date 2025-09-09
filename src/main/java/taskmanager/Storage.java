@@ -26,6 +26,11 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads stored local file and deserializes the tasks
+     * stored in it.
+     * @return List of tasks obtained from local file
+     */
     public TaskList load() {
         try {
             File saveFile = new File(filePath);
@@ -48,7 +53,6 @@ public class Storage {
                 loadedTasks.add(task);
             }
             scanner.close();
-            PrintHelper.getTaskListAsString(loadedTasks);
         } catch (Exception e) {
             System.out.println("Failed to obtain data in " + filePath);
         }
