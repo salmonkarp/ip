@@ -3,6 +3,7 @@ package taskmanager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +18,10 @@ public class DeadlineTaskTest {
 
     @Test
     public void saveStringTest() {
-        DeadlineTask task = new DeadlineTask("task", LocalDate.parse("1992-10-22"));
-        assertEquals("D`task`false`1992-10-22", task.getSaveString());
+        LocalDateTime now = LocalDateTime.now();
+        DeadlineTask task = new DeadlineTask("task", false, now, LocalDate.parse("1992-10-22"));
+        assertEquals("D`task`false`" + now + "`1992-10-22", task.getSaveString());
         task.markDone();
-        assertEquals("D`task`true`1992-10-22", task.getSaveString());
+        assertEquals("D`task`true`" + now + "`1992-10-22", task.getSaveString());
     }
 }

@@ -1,5 +1,7 @@
 package taskmanager;
 
+import java.time.LocalDateTime;
+
 /**
  * A type of task not too different from the normal Task class.
  */
@@ -10,6 +12,10 @@ public class TodoTask extends Task {
 
     public TodoTask(String name, boolean isDone) {
         super(name, isDone);
+    }
+
+    public TodoTask(String name, boolean isDone, LocalDateTime timeCreated) {
+        super(name, isDone, timeCreated);
     }
 
     @Override

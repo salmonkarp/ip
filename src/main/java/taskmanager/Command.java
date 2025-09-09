@@ -21,6 +21,7 @@ public abstract class Command {
             new SaveCommand.Factory(),
             new FindCommand.Factory(),
             new DeleteCommand.Factory(),
+            new SortCommand.Factory(),
             new ByeCommand.Factory()
     );
 

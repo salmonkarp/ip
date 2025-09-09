@@ -2,6 +2,8 @@ package taskmanager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 
 public class TodoTaskTest {
@@ -21,9 +23,10 @@ public class TodoTaskTest {
 
     @Test
     public void saveStringTest() {
-        TodoTask task = new TodoTask("task");
-        assertEquals("T`task`false", task.getSaveString());
+        LocalDateTime now = LocalDateTime.now();
+        TodoTask task = new TodoTask("task", false, now);
+        assertEquals("T`task`false`" + now, task.getSaveString());
         task.markDone();
-        assertEquals("T`task`true", task.getSaveString());
+        assertEquals("T`task`true`" + now, task.getSaveString());
     }
 }

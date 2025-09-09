@@ -2,6 +2,7 @@ package taskmanager;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -53,6 +54,22 @@ public class TaskList {
 
     public int size() {
         return tasks.size();
+    }
+
+    public void sort(Comparator<Task> comparator) {
+        tasks.sort(comparator);
+    }
+
+    @Override
+    public String toString() {
+        if (tasks.isEmpty()) {
+            return "You have no tasks right now.";
+        }
+        StringBuilder resultMessage = new StringBuilder("Here are the tasks in your list!\n");
+        for (int i = 0; i < tasks.size(); i += 1) {
+            resultMessage.append((i + 1)).append(". ").append(tasks.get(i).toString()).append("\n");
+        }
+        return (resultMessage.toString());
     }
 
 }
