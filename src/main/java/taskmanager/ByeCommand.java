@@ -9,6 +9,7 @@ public class ByeCommand extends Command {
     private final TaskList tasks;
 
     private ByeCommand(Storage storage, TaskList tasks) {
+        assert storage != null && tasks != null;
         this.storage = storage;
         this.tasks = tasks;
     }

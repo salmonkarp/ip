@@ -9,6 +9,7 @@ public class SaveCommand extends Command {
     private final TaskList tasks;
 
     private SaveCommand(Storage storage, TaskList tasks) {
+        assert storage != null && tasks != null;
         this.storage = storage;
         this.tasks = tasks;
     }

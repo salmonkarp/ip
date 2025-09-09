@@ -12,6 +12,7 @@ public class DeadlineCommand extends Command {
     private final TaskList tasks;
 
     private DeadlineCommand(String description, LocalDate time, TaskList tasks) {
+        assert !description.isEmpty() && time != null && tasks != null;
         this.description = description;
         this.time = time;
         this.tasks = tasks;

@@ -18,6 +18,7 @@ public class EventTask extends Task {
      */
     public EventTask(String name, LocalDate startTime, LocalDate endTime) {
         super(name);
+        assert startTime != null && endTime != null;
         this.startTime = startTime;
         this.endTime = endTime;
     }

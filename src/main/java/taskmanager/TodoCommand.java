@@ -8,9 +8,10 @@ public class TodoCommand extends Command {
     private final String description;
     private final TaskList tasks;
 
-    private TodoCommand(String description, TaskList taskList) {
+    private TodoCommand(String description, TaskList tasks) {
+        assert !description.isEmpty() && tasks != null;
         this.description = description;
-        this.tasks = taskList;
+        this.tasks = tasks;
     }
 
     @Override
