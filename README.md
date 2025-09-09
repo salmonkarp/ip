@@ -20,12 +20,12 @@ git clone https://github.com/salmonkarp/ip.git
 
 What the plan is going forward:
 - [X] Create GUI using FXML
-- [ ] Add more commands
-- [ ] Use variable arguments
-- [ ] Enhance GUI
+- [X] Add more commands
+- [X] Use variable arguments
+- [X] Enhance GUI
 
 > [!WARNING]
 > This is not a genuine pull request. This is just to demonstrate the ability to make a pull request.
 
-_Accurate as of 28/8/2025, with Release v0.2_
+_Accurate as of 10/9/2025
 
