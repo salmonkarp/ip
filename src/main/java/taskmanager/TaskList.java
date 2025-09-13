@@ -11,12 +11,10 @@ import java.util.List;
  */
 public class TaskList {
 
-    protected static final int INITIAL_TASK_LIST_CAPACITY = 100;
-
     private final List<Task> tasks;
 
     public TaskList() {
-        tasks = new ArrayList<>(INITIAL_TASK_LIST_CAPACITY);
+        tasks = new ArrayList<>();
     }
 
     public TaskList(int initialCapacity) {
@@ -28,7 +26,7 @@ public class TaskList {
      * @param inputTasks variable number of tasks to be inserted
      */
     public TaskList(Task... inputTasks) {
-        tasks = new ArrayList<>(INITIAL_TASK_LIST_CAPACITY);
+        tasks = new ArrayList<>();
         Collections.addAll(tasks, inputTasks);
     }
 

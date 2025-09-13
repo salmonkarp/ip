@@ -38,10 +38,12 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the TaskManager instance */
+    /**
+     * Injects the TaskBot instance
+     */
     public void setTaskManager(TaskManager d) {
         taskManager = d;
-        String greetingMessage = "Hi, I'm TaskManager!\n";
+        String greetingMessage = "Hi, I'm TaskBot!\n";
         greetingMessage += taskManager.getResponse("list");
 
         dialogContainer.getChildren().addAll(
@@ -55,7 +57,10 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
-        String input = userInput.getText();
+        String input = userInput.getText().trim();
+        if (input.trim().isEmpty()) {
+            return;
+        }
         String response = taskManager.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),

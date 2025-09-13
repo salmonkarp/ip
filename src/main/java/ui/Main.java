@@ -23,11 +23,12 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            stage.setMinHeight(220);
-            stage.setMinWidth(417);
+            stage.setMinHeight(600);
+            stage.setMinWidth(450);
+            // TODO: Fix mouse scrolling behaviour
             stage.getIcons().add(new Image(Objects.requireNonNull(
                     this.getClass().getResourceAsStream("/images/robotIcon.png"))));
-            stage.setTitle("TaskManager");
+            stage.setTitle("TaskBot");
             Font.loadFont(Objects.requireNonNull(
                     Main.class.getResource("/fonts/JetBrainsMono.ttf")).toExternalForm(), 14);
             FXMLLoader fxmlLoader = new FXMLLoader(

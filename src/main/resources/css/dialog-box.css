@@ -1,32 +1,27 @@
 .label {
-    -fx-background-color: black;
-    -fx-border-color: derive(gray, 50%);
+    -fx-background-color: #204d68;
+    -fx-border-color: derive(gray, 90%);
     -fx-border-width: 2px;
     -fx-background-radius: 1em 1em 0 1em;
     -fx-border-radius: 1em 1em 0 1em;
     -fx-padding: 6px;
-    -fx-border-insets: 0px 7px 0px 7px;
-    -fx-background-insets: 0px 7px 0px 7px;
-    -fx-text-fill: derive(gray, 50%);
+    -fx-border-insets: 0px 10px 0px 10px;
+    -fx-background-insets: 0px 10px 0px 10px;
+    -fx-text-fill: derive(gray, 90%);
     -fx-font-weight: 400;
     -fx-font-family: "JetBrains Mono Medium";
-
 }
 
 .reply-label {
     -fx-background-radius: 1em 1em 1em 0em;
     -fx-border-radius: 1em 1em 1em 0em;
     -fx-border-color: derive(gray, 50%);
+    -fx-background-color: black;
 }
 
 #displayPicture {
-    /* Shadow effect on image. */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
-
-    /* Change size of image. */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 5, 5);
     -fx-scale-x: 1;
     -fx-scale-y: 1;
-
-    /* Rotate image clockwise by degrees. */
     -fx-rotate: 0;
 }

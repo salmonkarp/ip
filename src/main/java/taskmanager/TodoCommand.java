@@ -1,7 +1,7 @@
 package taskmanager;
 
 /**
- * Command to create a todo task
+ * Command to create a TodoTask
  */
 public class TodoCommand extends Command {
 

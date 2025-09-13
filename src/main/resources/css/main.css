@@ -2,7 +2,7 @@
     main-color: derive(gray, -50%);
     -fx-background-color: main-color;
     -fx-background-image: url("../images/background.png");
-    -fx-background-size: 400px 400px;
+    -fx-background-size: 600px 600px;
     -fx-background-repeat: repeat;
 }
 
@@ -13,19 +13,19 @@
 }
 
 .button {
-    -fx-background-color: derive(gray, 80%);
+    -fx-background-color: #204d68;
     -fx-font: 14px "Jetbrains Mono Medium";
     -fx-background-radius: 0px;
 }
 
 .button:hover {
-    -fx-background-color: derive(gray, 60%);
+    -fx-background-color: #265775;
     -fx-font-size: 14px;
     -fx-cursor: HAND;
 }
 
 .button:pressed {
-    -fx-background-color:gray;
+    -fx-background-color: #376f91;
     -fx-font-size: 20px;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(gray, 20%);
+    -fx-background-color: #6c93aa;
     -fx-background-radius: 1em;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .scroll-pane {
-    -fx-background-color: rgba(0,0,0,.1);
+    -fx-background-color: rgba(1, 1, 1, 0.1);
 }
 
 .scroll-pane .viewport {

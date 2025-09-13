@@ -45,7 +45,7 @@ public class DeadlineCommand extends Command {
             try {
                 deadlineTime = LocalDate.parse(deadlineTaskDetails[1].strip());
             } catch (Exception e) {
-                throw new IllegalArgumentException("Error parsing date! Date should be in the format: YYYY-MM-DD");
+                throw new IllegalArgumentException("Wrong date format! Date should be in the format: YYYY-MM-DD");
             }
             return new DeadlineCommand(deadlineNameToAdd, deadlineTime, tasks);
         }

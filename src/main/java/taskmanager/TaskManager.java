@@ -15,6 +15,8 @@ public class TaskManager {
     private final Storage storage = new Storage(LOCAL_DATA_PATH);
     private final TaskList tasks;
 
+    // TODO: Add personality
+
     /**
      * Returns a TaskManager object.
      * This is made into a non-static class to allow later instantiation.
@@ -58,13 +60,14 @@ public class TaskManager {
             return ("Please don't include the character '" + SAVE_DELIMITER + "'!");
         }
         for (Command.Factory factory : Command.COMMAND_FACTORIES) {
-            if (userInput.startsWith(factory.getPrefix())) {
-                try {
-                    Command command = factory.createFromUserInput(userInput, tasks, storage);
-                    return command.execute();
-                } catch (Exception e) {
-                    return "Error! " + e.getMessage();
-                }
+            if (!userInput.startsWith(factory.getPrefix())) {
+                continue;
+            }
+            try {
+                Command command = factory.createFromUserInput(userInput, tasks, storage);
+                return command.execute();
+            } catch (Exception e) {
+                return "Error! " + e.getMessage();
             }
         }
         return "No matching command found. Try again?";

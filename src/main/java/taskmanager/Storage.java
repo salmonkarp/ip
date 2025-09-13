@@ -14,6 +14,8 @@ public class Storage {
     private TaskList loadedTasks;
     private final String filePath;
 
+    // TODO: Add error checking for when file is corrupted
+
     /**
      * Helper class to allow for future instantiation.
      * Initialisation will read from filePath, but we
