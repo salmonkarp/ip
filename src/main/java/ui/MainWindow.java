@@ -51,9 +51,9 @@ public class MainWindow extends AnchorPane {
      */
     public void setTaskManager(TaskManager d) {
         taskManager = d;
-        String greetingMessage = "Hi, I'm TaskBot!\n";
+        String greetingMessage = "Beep! Hi, I'm TaskBot.\nI can help you manage your tasks.\n\n";
         greetingMessage += taskManager.getResponse("list");
-
+        greetingMessage += "\nWhat can I do for you?";
         dialogContainer.getChildren().addAll(
                 DialogBox.getDukeDialog(greetingMessage, botImage)
         );
@@ -69,11 +69,21 @@ public class MainWindow extends AnchorPane {
         if (input.trim().isEmpty()) {
             return;
         }
-        String response = taskManager.getResponse(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, botImage)
-        );
+        String response;
+        try {
+            response = taskManager.getResponse(input);
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage),
+                    DialogBox.getDukeDialog(response, botImage)
+            );
+        } catch (Exception e) {
+            response = "Error! " + e.getMessage();
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage),
+                    DialogBox.getDukeDialog(response, botImage, true)
+            );
+        }
+
         userInput.clear();
 
         if (input.equals("bye")) {

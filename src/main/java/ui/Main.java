@@ -25,18 +25,23 @@ public class Main extends Application {
         try {
             stage.setMinHeight(600);
             stage.setMinWidth(450);
-            // TODO: Fix mouse scrolling behaviour
             stage.getIcons().add(new Image(Objects.requireNonNull(
                     this.getClass().getResourceAsStream("/images/robotIcon.png"))));
             stage.setTitle("TaskBot");
+
             Font.loadFont(Objects.requireNonNull(
                     Main.class.getResource("/fonts/JetBrainsMono.ttf")).toExternalForm(), 14);
             FXMLLoader fxmlLoader = new FXMLLoader(
                     Main.class.getResource("/view/MainWindow.fxml"));
+
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
+
             stage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setTaskManager(taskManager);
+            stage.setOnCloseRequest(event -> {
+                taskManager.getResponse("save"); // Save tasks before exiting
+            });
             stage.show();
         } catch (IOException e) {
             System.err.println("Error loading FXML");

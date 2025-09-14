@@ -49,6 +49,10 @@ public class DialogBox extends HBox {
         dialog.getStyleClass().add("reply-label");
     }
 
+    private void setError() {
+        dialog.getStyleClass().add("error");
+    }
+
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
@@ -56,6 +60,13 @@ public class DialogBox extends HBox {
     public static DialogBox getDukeDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+        return db;
+    }
+
+    public static DialogBox getDukeDialog(String text, Image img, boolean isError) {
+        var db = new DialogBox(text, img);
+        db.flip();
+        db.setError();
         return db;
     }
 }

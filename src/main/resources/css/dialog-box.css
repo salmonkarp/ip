@@ -19,6 +19,10 @@
     -fx-background-color: black;
 }
 
+.error {
+    -fx-background-color: derive(red, -75%);
+}
+
 #displayPicture {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 5, 5);
     -fx-scale-x: 1;

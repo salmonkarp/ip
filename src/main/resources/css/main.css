@@ -2,7 +2,7 @@
     main-color: derive(gray, -50%);
     -fx-background-color: main-color;
     -fx-background-image: url("../images/background.png");
-    -fx-background-size: 600px 600px;
+    -fx-background-size: 450px 450px;
     -fx-background-repeat: repeat;
 }
 

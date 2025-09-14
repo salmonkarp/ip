@@ -63,14 +63,10 @@ public class TaskManager {
             if (!userInput.startsWith(factory.getPrefix())) {
                 continue;
             }
-            try {
-                Command command = factory.createFromUserInput(userInput, tasks, storage);
-                return command.execute();
-            } catch (Exception e) {
-                return "Error! " + e.getMessage();
-            }
+            Command command = factory.createFromUserInput(userInput, tasks, storage);
+            return command.execute();
         }
-        return "No matching command found. Try again?";
+        throw new IllegalArgumentException("Unrecognised command.");
     }
 
 }
