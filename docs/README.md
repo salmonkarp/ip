@@ -13,7 +13,7 @@ git clone https://github.com/salmonkarp/ip.git
 ```
 ![Screenshot of the image](./Ui.png)
 
-## Features
+# Features
 
 ## Adding a todo: `todo`
 Adds a todo task to the list.
