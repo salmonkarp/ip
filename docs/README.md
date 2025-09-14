@@ -1,4 +1,4 @@
-# TaskBot :book:
+# TaskBot
 
 ## Quickstart
 1. Head to [the site of my fork](https://github.com/salmonkarp/ip).
@@ -11,6 +11,7 @@ Alternatively, you can also clone the repo and build it yourself:
 ```
 git clone https://github.com/salmonkarp/ip.git
 ```
+![Screenshot of the image](./Ui.png)
 
 ## Features
 
@@ -93,8 +94,7 @@ Saves the current list of tasks to a local file.
 ## Exiting the program: `bye`
 Exits the program.
 
-> [!WARNING]
 > This is a project for CS2103T 25/26 S1.
 
-_Accurate as of 15/9/2025
+_Accurate as of 15/9/2025_
 
