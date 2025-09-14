@@ -1,6 +1,5 @@
 package taskbot;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -9,7 +8,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class DeadlineTask extends Task {
 
-    private final LocalDate deadline;
+    private final LocalDateTime deadline;
 
     /**
      * Constructor for a DeadlineTask object, which is just a task
@@ -17,7 +16,7 @@ public class DeadlineTask extends Task {
      * @param name     The task name / description.
      * @param deadline A date in the form of LocalDate object.
      */
-    public DeadlineTask(String name, LocalDate deadline) {
+    public DeadlineTask(String name, LocalDateTime deadline) {
         super(name);
         this.deadline = deadline;
     }
@@ -29,7 +28,7 @@ public class DeadlineTask extends Task {
      * @param isDone Whether the task has been done or not.
      * @param deadline A date in the form of LocalDate object.
      */
-    public DeadlineTask(String name, boolean isDone, LocalDate deadline) {
+    public DeadlineTask(String name, boolean isDone, LocalDateTime deadline) {
         super(name, isDone);
         assert !name.isEmpty() && deadline != null;
         this.deadline = deadline;
@@ -44,20 +43,23 @@ public class DeadlineTask extends Task {
      * @param deadline A date in the form of LocalDate object.
      * @param timeCreated Time task was created.
      */
-    public DeadlineTask(String name, boolean isDone, LocalDateTime timeCreated, LocalDate deadline) {
+    public DeadlineTask(String name, boolean isDone, LocalDateTime timeCreated, LocalDateTime deadline) {
         super(name, isDone, timeCreated);
         assert !name.isEmpty() && deadline != null;
         this.deadline = deadline;
     }
 
-    protected LocalDate getDeadline() {
+    protected LocalDateTime getDeadline() {
         return this.deadline;
     }
 
     @Override
     public String toString() {
+        String format = (deadline.getHour() == 0 && deadline.getMinute() == 0)
+                ? "MMM d yyyy"
+                : "MMM d yyyy HH:mm";
         return "[" + getSaveCode() + "]" + super.toString() + " (by: "
-                + deadline.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
+                + deadline.format(DateTimeFormatter.ofPattern(format)) + ")";
     }
 
     @Override
@@ -69,6 +71,6 @@ public class DeadlineTask extends Task {
     public String getSaveString() {
         return super.getSaveString()
                 + TaskManager.SAVE_DELIMITER
-                + this.deadline.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                + this.deadline.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }

@@ -2,6 +2,8 @@ package taskbot;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  * A general task manager class that contains the overall
@@ -14,8 +16,6 @@ public class TaskManager {
 
     private final Storage storage = new Storage(LOCAL_DATA_PATH);
     private final TaskList tasks;
-
-    // TODO: Add personality
 
     /**
      * Returns a TaskManager object.
@@ -43,13 +43,13 @@ public class TaskManager {
             new DeadlineTask(delimitedStrings[1], // - name
                     Boolean.parseBoolean(delimitedStrings[2]), // - isDone
                     LocalDateTime.parse(delimitedStrings[3]),
-                    LocalDate.parse(delimitedStrings[4])); // - deadline
+                    TaskManager.parseTime(delimitedStrings[4])); // - deadline
         case "E" -> // Event task
             new EventTask(delimitedStrings[1], // - name
                     Boolean.parseBoolean(delimitedStrings[2]), // - isDone
                     LocalDateTime.parse(delimitedStrings[3]),
-                    LocalDate.parse(delimitedStrings[3]), // - startTime
-                    LocalDate.parse(delimitedStrings[4])); // - endTime
+                    TaskManager.parseTime(delimitedStrings[4]), // - startTime
+                    TaskManager.parseTime(delimitedStrings[5])); // - endTime
         default -> null;
         };
     }
@@ -67,6 +67,35 @@ public class TaskManager {
             return command.execute();
         }
         throw new IllegalArgumentException("Unrecognised command.");
+    }
+
+    /**
+     * Helper method to parse deadlines in different formats.
+     * @param input the raw date/time string
+     * @return LocalDateTime parsed deadline
+     */
+    public static LocalDateTime parseTime(String input) {
+        String[] patterns = {
+            "yyyy-MM-dd HH:mm",
+            "yyyy-MM-dd",
+            "MMM d yyyy HH:mm",
+            "MMM d yyyy"
+        };
+
+        for (String p : patterns) {
+            try {
+                DateTimeFormatter format = DateTimeFormatter.ofPattern(p);
+                if (p.contains("HH")) {
+                    return LocalDateTime.parse(input, format);
+                } else {
+                    return LocalDate.parse(input, format).atStartOfDay();
+                }
+            } catch (DateTimeParseException ignored) {
+                // ignored as we try the next pattern,
+                // and still throw an error if none match
+            }
+        }
+        throw new IllegalArgumentException("Unrecognized deadline format: " + input);
     }
 
 }

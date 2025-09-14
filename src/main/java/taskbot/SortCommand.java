@@ -40,7 +40,7 @@ public class SortCommand extends Command {
         }, Comparator.nullsLast(Comparator.naturalOrder())));
         default -> throw new IllegalStateException("Unexpected value: " + sortType);
         }
-        return ("I've sorted your tasks.\n") + tasks.toString();
+        return ("I've sorted your tasks.\n") + tasks;
     }
 
     protected static class Factory implements Command.Factory {

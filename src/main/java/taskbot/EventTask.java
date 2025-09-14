@@ -1,6 +1,5 @@
 package taskbot;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -8,8 +7,8 @@ import java.time.format.DateTimeFormatter;
  * A type of task that has both a starting and ending time.
  */
 public class EventTask extends Task {
-    private final LocalDate startTime;
-    private final LocalDate endTime;
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
 
     /**
      * Constructor to create an EventTask
@@ -17,7 +16,7 @@ public class EventTask extends Task {
      * @param startTime When the event starts, in the form of a LocalDate object.
      * @param endTime When the event ends, in the form of a LocalDate object.
      */
-    public EventTask(String name, LocalDate startTime, LocalDate endTime) {
+    public EventTask(String name, LocalDateTime startTime, LocalDateTime endTime) {
         super(name);
         assert startTime != null && endTime != null;
         this.startTime = startTime;
@@ -32,7 +31,7 @@ public class EventTask extends Task {
      * @param startTime When the event starts, in the form of a LocalDate object.
      * @param endTime When the event ends, in the form of a LocalDate object.
      */
-    public EventTask(String name, boolean isDone, LocalDate startTime, LocalDate endTime) {
+    public EventTask(String name, boolean isDone, LocalDateTime startTime, LocalDateTime endTime) {
         super(name, isDone);
         this.startTime = startTime;
         this.endTime = endTime;
@@ -47,23 +46,28 @@ public class EventTask extends Task {
      * @param endTime When the event ends, in the form of a LocalDate object.
      * @param timeCreated When the task was created
      */
-    public EventTask(String name, boolean isDone, LocalDateTime timeCreated, LocalDate startTime, LocalDate endTime) {
+    public EventTask(String name, boolean isDone,
+                     LocalDateTime timeCreated,
+                     LocalDateTime startTime,
+                     LocalDateTime endTime) {
         super(name, isDone, timeCreated);
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    protected LocalDate getStartTime() {
+    protected LocalDateTime getStartTime() {
         return this.startTime;
     }
 
     @Override
     public String toString() {
-        return "[" + getSaveCode() + "]" + super.toString() + " (from: "
-                + this.startTime.format(DateTimeFormatter.ofPattern("MMM d yyyy"))
-                + " to: "
-                + this.endTime.format(DateTimeFormatter.ofPattern("MMM d yyyy"))
-                + ")";
+        String startTimeFormat = (startTime.getHour() == 0 && startTime.getMinute() == 0)
+                ? "MMM d yyyy" : "MMM d yyyy HH:mm";
+        String endTimeFormat = (endTime.getHour() == 0 && endTime.getMinute() == 0)
+                ? "MMM d yyyy" : "MMM d yyyy HH:mm";
+        return "[" + getSaveCode() + "]" + super.toString()
+                + " (from: " + startTime.format(DateTimeFormatter.ofPattern(startTimeFormat))
+                + " to: " + endTime.format(DateTimeFormatter.ofPattern(endTimeFormat)) + ")";
     }
 
     @Override
@@ -75,8 +79,8 @@ public class EventTask extends Task {
     public String getSaveString() {
         return super.getSaveString()
                 + TaskManager.SAVE_DELIMITER
-                + this.startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                + this.startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
                 + TaskManager.SAVE_DELIMITER
-                + this.endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                + this.endTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }

@@ -1,6 +1,6 @@
 package taskbot;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Command to create an event task.
@@ -8,8 +8,8 @@ import java.time.LocalDate;
 public class EventCommand extends Command {
 
     private final String description;
-    private final LocalDate startTime;
-    private final LocalDate endTime;
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
     private final TaskList tasks;
 
     /**
@@ -19,7 +19,7 @@ public class EventCommand extends Command {
      * @param endTime Ending time of the event
      * @param tasks List of tasks for the task to be added to
      */
-    public EventCommand(String description, LocalDate startTime, LocalDate endTime, TaskList tasks) {
+    public EventCommand(String description, LocalDateTime startTime, LocalDateTime endTime, TaskList tasks) {
         assert !description.isEmpty() && startTime != null && endTime != null && tasks != null;
         this.description = description;
         this.startTime = startTime;
@@ -54,13 +54,19 @@ public class EventCommand extends Command {
                 throw new IllegalArgumentException("Wrong format! Type 'event [name] / [start time] / [end time]'");
             }
             String deadlineNameToAdd = eventCommandDetails[0].strip();
-            LocalDate startTime;
-            LocalDate endTime;
+            LocalDateTime startTime;
+            LocalDateTime endTime;
             try {
-                startTime = LocalDate.parse(eventCommandDetails[1].strip());
-                endTime = LocalDate.parse(eventCommandDetails[2].strip());
+                startTime = TaskManager.parseTime(eventCommandDetails[1].strip());
+                endTime = TaskManager.parseTime(eventCommandDetails[2].strip());
             } catch (Exception e) {
-                throw new IllegalArgumentException("Wrong format! Dates should be in the format: YYYY-MM-DD");
+                throw new IllegalArgumentException("""
+                        Wrong format! \
+                        Times should be in the one of the following formats:
+                        - yyyy-MM-dd HH:mm
+                        - yyyy-MM-dd
+                        - MMM d yyyy HH:mm
+                        - MMM d yyyy""");
             }
             if (endTime.isBefore(startTime)) {
                 throw new IllegalArgumentException("End time must be after the start time!");

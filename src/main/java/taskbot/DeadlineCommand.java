@@ -1,6 +1,6 @@
 package taskbot;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Command to create a deadline task
@@ -8,10 +8,10 @@ import java.time.LocalDate;
 public class DeadlineCommand extends Command {
 
     private final String description;
-    private final LocalDate time;
+    private final LocalDateTime time;
     private final TaskList tasks;
 
-    private DeadlineCommand(String description, LocalDate time, TaskList tasks) {
+    private DeadlineCommand(String description, LocalDateTime time, TaskList tasks) {
         assert !description.isEmpty() && time != null && tasks != null;
         this.description = description;
         this.time = time;
@@ -41,11 +41,18 @@ public class DeadlineCommand extends Command {
                 throw new IllegalArgumentException("Wrong no. of arguments! Type 'deadline [name] / [deadline]'");
             }
             String deadlineNameToAdd = deadlineTaskDetails[0].strip();
-            LocalDate deadlineTime;
+            LocalDateTime deadlineTime;
             try {
-                deadlineTime = LocalDate.parse(deadlineTaskDetails[1].strip());
+                System.out.println(deadlineTaskDetails[1].strip());
+                deadlineTime = TaskManager.parseTime(deadlineTaskDetails[1].strip());
             } catch (Exception e) {
-                throw new IllegalArgumentException("Wrong date format! Date should be in the format: YYYY-MM-DD");
+                throw new IllegalArgumentException("""
+                        Wrong format! \
+                        Times should be in the one of the following formats:
+                        - yyyy-MM-dd HH:mm
+                        - yyyy-MM-dd
+                        - MMM d yyyy HH:mm
+                        - MMM d yyyy""");
             }
             return new DeadlineCommand(deadlineNameToAdd, deadlineTime, tasks);
         }
