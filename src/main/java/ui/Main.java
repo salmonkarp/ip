@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import taskmanager.TaskManager;
+import taskbot.TaskManager;
 
 /**
  * Main class used for JavaFX Application, acting

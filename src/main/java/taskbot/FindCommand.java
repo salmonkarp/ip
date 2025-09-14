@@ -1,4 +1,4 @@
-package taskmanager;
+package taskbot;
 
 /**
  * Command to find tasks that match a certain query

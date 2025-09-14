@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import taskmanager.TaskManager;
+import taskbot.TaskManager;
 
 /**
  * Controller for the main GUI.
@@ -77,7 +77,7 @@ public class MainWindow extends AnchorPane {
                     DialogBox.getDukeDialog(response, botImage)
             );
         } catch (Exception e) {
-            response = "Error! " + e.getMessage();
+            response = "Beep! Error found:\n" + e.getMessage();
             dialogContainer.getChildren().addAll(
                     DialogBox.getUserDialog(input, userImage),
                     DialogBox.getDukeDialog(response, botImage, true)

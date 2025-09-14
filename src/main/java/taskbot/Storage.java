@@ -1,4 +1,4 @@
-package taskmanager;
+package taskbot;
 
 import java.io.File;
 import java.io.FileWriter;

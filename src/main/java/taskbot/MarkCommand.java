@@ -1,4 +1,4 @@
-package taskmanager;
+package taskbot;
 
 /**
  * Command to mark a certain task as done

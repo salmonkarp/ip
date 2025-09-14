@@ -1,4 +1,4 @@
-package taskmanager;
+package taskbot;
 
 /**
  * Command to delete a certain task using a specified index

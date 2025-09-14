@@ -1,4 +1,4 @@
-package taskmanager;
+package taskbot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

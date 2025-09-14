@@ -48,7 +48,7 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "taskManager"
+    archiveBaseName = "taskBot"
     archiveClassifier = null
 }
 

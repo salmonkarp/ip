@@ -1,4 +1,4 @@
-package taskmanager;
+package taskbot;
 
 /**
  * Command to list out all tasks

@@ -1,4 +1,4 @@
-package taskmanager;
+package taskbot;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -57,7 +57,7 @@ public class TaskManager {
     public String getResponse(String userInput) {
         assert !userInput.isEmpty();
         if (userInput.contains(SAVE_DELIMITER)) {
-            return ("Please don't include the character '" + SAVE_DELIMITER + "'!");
+            return ("Beep! Please don't include the character '" + SAVE_DELIMITER + "'!");
         }
         for (Command.Factory factory : Command.COMMAND_FACTORIES) {
             if (!userInput.startsWith(factory.getPrefix())) {
