@@ -1,5 +1,7 @@
 package taskbot;
 
+import static taskbot.Utility.parseTime;
+
 import java.time.LocalDateTime;
 
 /**
@@ -44,7 +46,7 @@ public class DeadlineCommand extends Command {
             LocalDateTime deadlineTime;
             try {
                 System.out.println(deadlineTaskDetails[1].strip());
-                deadlineTime = TaskManager.parseTime(deadlineTaskDetails[1].strip());
+                deadlineTime = parseTime(deadlineTaskDetails[1].strip());
             } catch (Exception e) {
                 throw new IllegalArgumentException("""
                         Wrong format! \

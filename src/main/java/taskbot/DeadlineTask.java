@@ -1,5 +1,7 @@
 package taskbot;
 
+import static taskbot.Storage.SAVE_DELIMITER;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -70,7 +72,7 @@ public class DeadlineTask extends Task {
     @Override
     public String getSaveString() {
         return super.getSaveString()
-                + TaskManager.SAVE_DELIMITER
+                + SAVE_DELIMITER
                 + this.deadline.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }

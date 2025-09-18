@@ -1,8 +1,11 @@
 package taskbot;
 
+import static taskbot.Utility.parseTime;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 
 /**
@@ -10,6 +13,8 @@ import java.util.Scanner;
  * from files stored in user's device.
  */
 public class Storage {
+
+    protected static final String SAVE_DELIMITER = "`";
 
     private TaskList loadedTasks;
     private final String filePath;
@@ -47,7 +52,7 @@ public class Storage {
             Scanner scanner = new Scanner(saveFile);
             while (scanner.hasNextLine()) {
                 String rawString = scanner.nextLine();
-                Task task = TaskManager.getTaskFromSaveString(rawString);
+                Task task = getTaskFromSaveString(rawString);
                 if (task == null) {
                     continue;
                 }
@@ -77,5 +82,32 @@ public class Storage {
             return ("Failed to write to " + filePath);
         }
 
+    }
+
+    public static Task getTaskFromSaveString(String s) {
+        String[] delimitedStrings = s.split(SAVE_DELIMITER);
+        String taskCode = delimitedStrings[0];
+        return switch (taskCode) {
+        case "A" -> // Normal task
+            new Task(delimitedStrings[1],
+                    Boolean.parseBoolean(delimitedStrings[2]),
+                    LocalDateTime.parse(delimitedStrings[3]));
+        case "T" -> // TodoTask
+            new TodoTask(delimitedStrings[1],
+                    Boolean.parseBoolean(delimitedStrings[2]),
+                    LocalDateTime.parse(delimitedStrings[3]));
+        case "D" -> // Deadline task
+            new DeadlineTask(delimitedStrings[1], // - name
+                    Boolean.parseBoolean(delimitedStrings[2]), // - isDone
+                    LocalDateTime.parse(delimitedStrings[3]),
+                    parseTime(delimitedStrings[4])); // - deadline
+        case "E" -> // Event task
+            new EventTask(delimitedStrings[1], // - name
+                    Boolean.parseBoolean(delimitedStrings[2]), // - isDone
+                    LocalDateTime.parse(delimitedStrings[3]),
+                    parseTime(delimitedStrings[4]), // - startTime
+                    parseTime(delimitedStrings[5])); // - endTime
+        default -> null;
+        };
     }
 }

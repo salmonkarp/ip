@@ -1,5 +1,7 @@
 package taskbot;
 
+import static taskbot.Utility.parseTime;
+
 import java.time.LocalDateTime;
 
 /**
@@ -57,8 +59,8 @@ public class EventCommand extends Command {
             LocalDateTime startTime;
             LocalDateTime endTime;
             try {
-                startTime = TaskManager.parseTime(eventCommandDetails[1].strip());
-                endTime = TaskManager.parseTime(eventCommandDetails[2].strip());
+                startTime = parseTime(eventCommandDetails[1].strip());
+                endTime = parseTime(eventCommandDetails[2].strip());
             } catch (Exception e) {
                 throw new IllegalArgumentException("""
                         Wrong format! \

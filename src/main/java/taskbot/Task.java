@@ -1,5 +1,7 @@
 package taskbot;
 
+import static taskbot.Storage.SAVE_DELIMITER;
+
 import java.time.LocalDateTime;
 
 /**
@@ -73,11 +75,11 @@ public class Task implements Comparable<Task> {
 
     public String getSaveString() {
         return getSaveCode()
-                + TaskManager.SAVE_DELIMITER
+                + SAVE_DELIMITER
                 + this.name
-                + TaskManager.SAVE_DELIMITER
+                + SAVE_DELIMITER
                 + this.isDone
-                + TaskManager.SAVE_DELIMITER
+                + SAVE_DELIMITER
                 + this.timeCreated;
     }
 

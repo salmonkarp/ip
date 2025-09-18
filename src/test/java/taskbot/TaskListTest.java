@@ -1,6 +1,7 @@
 package taskbot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static taskbot.Utility.parseTime;
 
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +12,8 @@ public class TaskListTest {
         TaskList taskList = new TaskList();
         taskList.add(new Task("test1"));
         taskList.add(new TodoTask("test2"));
-        taskList.add(new DeadlineTask("test3", TaskManager.parseTime("2024-10-20")));
-        taskList.add(new EventTask("test4", TaskManager.parseTime("2025-10-11"), TaskManager.parseTime("2026-10-11")));
+        taskList.add(new DeadlineTask("test3", parseTime("2024-10-20")));
+        taskList.add(new EventTask("test4", parseTime("2025-10-11"), parseTime("2026-10-11")));
         assertEquals("[ ] test1", taskList.get(0).toString());
         assertEquals("[T][ ] test2", taskList.get(1).toString());
         assertEquals("[D][ ] test3 (by: Oct 20 2024)", taskList.get(2).toString());
@@ -24,8 +25,8 @@ public class TaskListTest {
         TaskList taskList = new TaskList(
                 new Task("test1"),
                 new TodoTask("test2"),
-                new DeadlineTask("test3", TaskManager.parseTime("2024-10-20")),
-                new EventTask("test4", TaskManager.parseTime("2025-10-11"), TaskManager.parseTime("2026-10-11")));
+                new DeadlineTask("test3", parseTime("2024-10-20")),
+                new EventTask("test4", parseTime("2025-10-11"), parseTime("2026-10-11")));
 
         taskList.remove(1);
         assertEquals("[ ] test1", taskList.get(0).toString());
@@ -38,8 +39,8 @@ public class TaskListTest {
         TaskList taskList = new TaskList(
                 new Task("test1"),
                 new TodoTask("test2"),
-                new DeadlineTask("test3", TaskManager.parseTime("2024-10-20")),
-                new EventTask("test4", TaskManager.parseTime("2025-10-11"), TaskManager.parseTime("2026-10-11")));
+                new DeadlineTask("test3", parseTime("2024-10-20")),
+                new EventTask("test4", parseTime("2025-10-11"), parseTime("2026-10-11")));
 
         taskList.get(1).markDone();
         taskList.get(3).markDone();
