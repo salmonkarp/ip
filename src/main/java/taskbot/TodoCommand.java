@@ -19,7 +19,7 @@ public class TodoCommand extends Command {
         TodoTask todoTaskToAdd = new TodoTask(this.description);
         tasks.add(todoTaskToAdd);
         return ("I've added a new todo task: " + todoTaskToAdd
-                + "\nYou have " + tasks.size() + " tasks now.");
+                + "\nYou have " + tasks.size() + " task(s) now.");
     }
 
     protected static class Factory implements Command.Factory {

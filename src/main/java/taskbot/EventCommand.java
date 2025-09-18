@@ -37,7 +37,7 @@ public class EventCommand extends Command {
         );
         tasks.add(eventTaskToAdd);
         return ("I've added a new event task: " + eventTaskToAdd
-                + "\nYou have " + tasks.size() + " tasks now.");
+                + "\nYou have " + tasks.size() + " task(s) now.");
     }
 
     protected static class Factory implements Command.Factory {
@@ -51,6 +51,13 @@ public class EventCommand extends Command {
 
         @Override
         public Command createFromUserInput(String userInput, TaskList tasks, Storage storage) {
+            // Format not delimited by explicit signifiers like /from and /to
+            // Instead, we use the first / to separate name and start time and end time
+            // This is because any error is going to inform the user of the correct format anyway
+            // and any command should not be too long to keep typing effort low
+            // as well as the fact that commands are not something that users share with each other
+            // so memorability is not a concern
+
             String[] eventCommandDetails = userInput.substring(PREFIX.length()).split("/");
             if (eventCommandDetails.length != 3) {
                 throw new IllegalArgumentException("Wrong format! Type 'event [name] / [start time] / [end time]'");

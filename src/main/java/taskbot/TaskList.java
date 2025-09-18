@@ -30,7 +30,7 @@ public class TaskList {
         Collections.addAll(tasks, inputTasks);
     }
 
-    public String getTasksAsString() {
+    protected String getTasksAsString() {
         StringBuilder result = new StringBuilder();
         for (Task t : tasks) {
             result.append(t.getSaveString()).append('\n');
@@ -38,27 +38,27 @@ public class TaskList {
         return result.toString();
     }
 
-    public void add(Task t) {
+    protected void add(Task t) {
         tasks.add(t);
     }
 
-    public Task get(int index) {
+    protected Task get(int index) {
         return tasks.get(index);
     }
 
-    public Task remove(int index) {
+    protected Task remove(int index) {
         return tasks.remove(index);
     }
 
-    public int size() {
+    protected int size() {
         return tasks.size();
     }
 
-    public void sort(Comparator<Task> comparator) {
+    protected void sort(Comparator<Task> comparator) {
         tasks.sort(comparator);
     }
 
-    public boolean isEmpty() {
+    protected boolean isEmpty() {
         return tasks.isEmpty();
     }
     @Override
@@ -70,4 +70,7 @@ public class TaskList {
         return (resultMessage.toString());
     }
 
+    protected void clear() {
+        tasks.clear();
+    }
 }

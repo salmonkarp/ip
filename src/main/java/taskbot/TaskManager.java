@@ -39,4 +39,7 @@ public class TaskManager {
         throw new IllegalArgumentException("Unrecognised command.");
     }
 
+    public void clearData() {
+        tasks.clear();
+    }
 }

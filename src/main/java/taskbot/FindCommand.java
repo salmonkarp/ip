@@ -21,7 +21,7 @@ public class FindCommand extends Command {
         for (int i = 0; i < tasks.size(); i += 1) {
             Task currentTask = tasks.get(i);
             if (currentTask.getName().toLowerCase().contains(query.toLowerCase())) {
-                result.append(counter).append(". ").append(currentTask).append('\n');
+                result.append(counter + 1).append(". ").append(currentTask).append('\n');
                 counter += 1;
             }
         }

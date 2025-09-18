@@ -34,6 +34,9 @@ public class Utility {
             } catch (DateTimeParseException ignored) {
                 // ignored as we try the next pattern,
                 // and still throw an error if none match
+                // hopefully this is enough justification for ignoring exceptions
+                // as this is not ignoring the error, just not handling it
+                // until we find a match or exhaust all options
             }
         }
         throw new IllegalArgumentException("Unrecognized deadline format: " + input);

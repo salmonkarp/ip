@@ -24,7 +24,7 @@ public class DeadlineCommand extends Command {
         DeadlineTask deadlineTaskToAdd = new DeadlineTask(description, time);
         tasks.add(deadlineTaskToAdd);
         return ("I've added a new deadline task: " + deadlineTaskToAdd
-                + "\nYou have " + tasks.size() + " tasks now.");
+                + "\nYou have " + tasks.size() + " task(s) now.");
     }
 
     protected static class Factory implements Command.Factory {
@@ -38,6 +38,13 @@ public class DeadlineCommand extends Command {
 
         @Override
         public Command createFromUserInput(String userInput, TaskList tasks, Storage storage) {
+            // Format not delimited by explicit signifiers like /by
+            // Instead, we use the first / to separate name and deadline
+            // This is because any error is going to inform the user of the correct format anyway
+            // and any command should not be too long to keep typing effort low
+            // as well as the fact that commands are not something that users share with each other
+            // so memorability is not a concern
+
             String[] deadlineTaskDetails = userInput.substring(PREFIX.length()).split("/");
             if (deadlineTaskDetails.length != 2) {
                 throw new IllegalArgumentException("Wrong no. of arguments! Type 'deadline [name] / [deadline]'");

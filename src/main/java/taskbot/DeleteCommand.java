@@ -17,8 +17,8 @@ public class DeleteCommand extends Command {
     @Override
     public String execute() {
         Task deletedTask = tasks.remove(indexToDelete);
-        return ("I've removed this task: " + deletedTask.toString()
-                + "\nYou have " + tasks.size() + " tasks now.");
+        return ("I've removed this task: \n" + deletedTask.toString()
+                + "\nYou have " + tasks.size() + " task(s) now.");
     }
 
     protected static class Factory implements Command.Factory {
