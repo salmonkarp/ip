@@ -38,11 +38,11 @@ public class Storage {
             File parentDir = saveFile.getParentFile();
             if (parentDir != null && !parentDir.exists()) {
                 boolean isSuccessful = parentDir.mkdirs();
-                System.out.println("Create new directories: " + (isSuccessful ? "not" : "") + "successful");
+                System.out.println("Create new directories: " + (isSuccessful ? "" : "not") + "successful");
             }
             if (!saveFile.exists()) {
                 boolean isSuccessful = saveFile.createNewFile();
-                System.out.println("Create new save file: " + (isSuccessful ? "not" : "") + "successful");
+                System.out.println("Create new save file: " + (isSuccessful ? "" : "not") + "successful");
             }
             Scanner scanner = new Scanner(saveFile);
             while (scanner.hasNextLine()) {
