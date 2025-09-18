@@ -1,15 +1,22 @@
----
-layout: page
-title: User Guide
----
-
 # TaskBot
 
 TaskBot is a desktop application for managing your tasks efficiently. 
 It allows you to add, delete, mark, unmark, and find tasks with ease.
 
 ### Table of Contents
-{:toc}
+- [Quickstart](#quickstart)
+- [Features](#features)
+- - [Adding a todo: `todo`](#adding-a-todo-todo)
+- - [Adding a deadline: `deadline`](#adding-a-deadline-deadline)
+- - [Adding an event: `event`](#adding-an-event-event)
+- - [Listing all tasks: `list`](#listing-all-tasks-list)
+- - [Marking a task as done: `mark`](#marking-a-task-as-done-mark)
+- - [Unmarking a task as not done: `unmark`](#unmarking-a-task-as-not-done-unmark)
+- - [Deleting a task: `delete`](#deleting-a-task-delete)
+- - [Finding tasks by keyword: `find`](#finding-tasks-by-keyword-find)
+- - [Sorting tasks by type: `sort`](#sorting-tasks-by-type-sort)
+- - [Saving tasks to file: `save`](#saving-tasks-to-file-save)
+- - [Exiting the program: `bye`](#exiting-the-program-bye)  
 
 <br>
 
