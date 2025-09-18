@@ -12,7 +12,8 @@ All you need to do is:
 2. Go to the Releases section
 3. Download the .jar file
 4. Put it into an empty folder, and run by clicking it or running `java -jar "taskBot.jar"` in a terminal.
-5. Enjoy!
+5. Learn how to use application with this [user guide](https://salmonkarp.github.io/ip/)
+6. Enjoy!
 
 Alternatively, you can also clone the repo and build it yourself:
 ```
@@ -28,5 +29,5 @@ What the plan is going forward:
 > [!WARNING]
 > This is a project for CS2103T 25/26 S1.
 
-_Accurate as of 15/9/2025
+_Accurate as of 15/9/2025_
 
