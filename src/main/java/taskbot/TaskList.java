@@ -58,12 +58,12 @@ public class TaskList {
         tasks.sort(comparator);
     }
 
+    public boolean isEmpty() {
+        return tasks.isEmpty();
+    }
     @Override
     public String toString() {
-        if (tasks.isEmpty()) {
-            return "You have no tasks right now.";
-        }
-        StringBuilder resultMessage = new StringBuilder("Here are the tasks in your list!\n");
+        StringBuilder resultMessage = new StringBuilder();
         for (int i = 0; i < tasks.size(); i += 1) {
             resultMessage.append((i + 1)).append(". ").append(tasks.get(i).toString()).append("\n");
         }

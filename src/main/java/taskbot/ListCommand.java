@@ -14,7 +14,10 @@ public class ListCommand extends Command {
 
     @Override
     public String execute() {
-        return tasks.toString();
+        if (tasks.isEmpty()) {
+            return "You have no tasks right now.";
+        }
+        return "Here are the tasks in your list!\n" + tasks.toString();
     }
 
     protected static class Factory implements Command.Factory {

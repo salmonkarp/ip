@@ -17,16 +17,16 @@ public class FindCommand extends Command {
     @Override
     public String execute() {
         StringBuilder result = new StringBuilder("Here are the matching tasks in your list:\n");
-        int counter = 1;
+        int counter = 0;
         for (int i = 0; i < tasks.size(); i += 1) {
             Task currentTask = tasks.get(i);
-            if (currentTask.getName().contains(query)) {
+            if (currentTask.getName().toLowerCase().contains(query.toLowerCase())) {
                 result.append(counter).append(". ").append(currentTask).append('\n');
                 counter += 1;
             }
         }
-        if (result.isEmpty()) {
-            return "No such task found!";
+        if (counter == 0) {
+            return "Sorry, no task found with keyword " + query + " was found.";
         }
         return (result.toString());
     }
